@@ -46,6 +46,9 @@
         </div>
     @endif
 </div>
+<div class="d-block w-100 px-4">
+    {{ $lists->withQueryString()->links() }}
+</div>
 <div class="modal fade" id="upload" tabindex="-1" role="dialog" aria-labelledby="uploadLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">

@@ -19,7 +19,7 @@ class HomeController extends Controller
         $data['title'] = $this->title." - ".env('APP_NAME', 'Awesome Website');
         $data['pagetitle'] = $this->title;
         $data['uri'] = $this->uri;
-        $data['lists'] = Inbox::orderBy('id', 'DESC')->paginate(20);
+        $data['lists'] = Inbox::orderBy('code', 'DESC')->paginate(20);
         foreach($data['lists'] as $key=> $val)
         {
             $data['lists'][$key]->operator = '-';
