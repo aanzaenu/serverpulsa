@@ -94,7 +94,7 @@ class InboxController extends Controller
         {
             $datas = $request->data;
             $pengirim = $request->pengirim;
-            $latest = Inbox::orderby('id', 'DESC')->first();
+            $latest = Inbox::orderby('code', 'DESC')->first();
             $lastid = 0;
             if($latest)
             {
@@ -102,22 +102,25 @@ class InboxController extends Controller
             }
             foreach($datas as $data)
             {
-                if(intval($data['code']) > $lastid)
-                {
-                    if(!empty($pengirim))
+                $cek = Inbox::where('code', $data['code'])->first();
+                if(!$cek){
+                    if(intval($data['code']) > $lastid)
                     {
-                        if (in_array($data['sender'], $pengirim))
+                        if(!empty($pengirim))
                         {
-                            $array = array(
-                                'code' => $data['code'],
-                                'sender' => $data['sender'],
-                                'transaction_id' => $data['transactionid'],
-                                'status' => 0,
-                                'message' => $data['message'],
-                                'tanggal' => $data['tgl'],
-                                'op' => 0
-                            );
-                            Inbox::create($array);
+                            if (in_array($data['sender'], $pengirim))
+                            {
+                                $array = array(
+                                    'code' => $data['code'],
+                                    'sender' => $data['sender'],
+                                    'transaction_id' => $data['transactionid'],
+                                    'status' => 0,
+                                    'message' => $data['message'],
+                                    'tanggal' => $data['tgl'],
+                                    'op' => 0
+                                );
+                                Inbox::create($array);
+                            }
                         }
                     }
                 }
