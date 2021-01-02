@@ -175,4 +175,13 @@ class InboxController extends Controller
         $request->session()->flash('error', 'Error');
         return redirect('/home');
     }
+    public function lastinbox()
+    {
+        $model = Inbox::orderBy('code', 'DESC')->first();
+        if($model)
+        {
+            return intval($model->code);
+        }
+        return 0;
+    }
 }
