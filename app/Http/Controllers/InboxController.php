@@ -169,13 +169,6 @@ class InboxController extends Controller
         $save = $model->save();
         if($save)
         {
-            if(!$model->image)
-            {
-                $model2 = Inbox::find($request->id);
-                $model2->status = '0';
-                $model2->op = 0;
-                $model2->save();
-            }
             $request->session()->flash('success', 'Data Updated');
             return redirect('/home');
         }
