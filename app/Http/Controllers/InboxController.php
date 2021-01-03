@@ -148,6 +148,11 @@ class InboxController extends Controller
     }
     public function lastinbox()
     {
+        date_default_timezone_set('Asia/Jakarta');
+        $sett = Setting::where('key', 'lastupdate');
+        $sett->value = date('Y-m-d H:i:s', time());
+        $sett->save();
+
         $model = Inbox::orderBy('code', 'DESC')->first();
         if($model)
         {
