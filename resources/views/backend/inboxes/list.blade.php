@@ -31,6 +31,9 @@
                         <div class="d-block text-center">
                             <h4>Pulsa Sekarang: Rp.{{ number_format($saldo->value) }}</h4>
                         </div>
+                        <div class="d-block text-center">
+                            <h6>Last Update: {{ $saldo->updated_at->diffForHumans() }}</h6>
+                        </div>
                     </div>
                 </div>
             </div>
