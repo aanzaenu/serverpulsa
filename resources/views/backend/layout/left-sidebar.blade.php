@@ -24,6 +24,7 @@
                         <span> Report </span>
                     </a>
                 </li>
+                @if (is_admin())
                 <?php
                     $class_show = '';
                     $class_menuitem = '';
@@ -38,7 +39,8 @@
                         <i data-feather="users"></i>
                         <span> Users </span>
                     </a>
-                </li>
+                </li>                    
+                @endif
             </ul>
         </div>
         <div class="clearfix"></div>
