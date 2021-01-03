@@ -149,7 +149,7 @@ class InboxController extends Controller
     public function lastinbox()
     {
         date_default_timezone_set('Asia/Jakarta');
-        $sett = Setting::where('key', 'lastupdate');
+        $sett = Setting::where('key', 'lastupdate')->first();
         $sett->value = date('Y-m-d H:i:s', time());
         $sett->save();
 
@@ -168,7 +168,7 @@ class InboxController extends Controller
     {
         if(!empty($request))
         {
-            $model = Setting::where('key', 'saldo');
+            $model = Setting::where('key', 'saldo')->first();
             $model->value = intval($request->get('saldo'));
             $model->save();
             return response()->json([
