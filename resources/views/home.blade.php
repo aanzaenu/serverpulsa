@@ -34,7 +34,7 @@
                         <td>{{ $list->operator }}</td>
                         <td>{{ $list->tanggal }}</td>
                         <td>
-                            <button type="button" class="btn btn-{{ $list->image && $list->status == 1 ? 'success' : 'primary' }} btn-sm upload" data-id="{{ $list->id }}" data-code="{{ $list->code }}" data-status="{{ $list->status }}" data-image="{{ $list->image ? asset($list->image) : '' }}">{{ $list->image && $list->status == 1 ? 'Detail' : 'Edit' }}</button>
+                            <button type="button" class="btn btn-{{ $list->image && $list->status == 1 ? 'success' : 'primary' }} btn-sm upload" data-id="{{ $list->id }}" data-code="{{ $list->code }}" data-status="{{ $list->status }}" data-image="{{ $list->image ? asset_url($list->image) : '' }}">{{ $list->image && $list->status == 1 ? 'Detail' : 'Edit' }}</button>
                         </td>
                     </tr>
                 @endforeach

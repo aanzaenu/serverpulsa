@@ -1,7 +1,7 @@
 @extends('backend.layout.app')
 @section('css')
-    <link href="{{asset('backend/libs/animate.css/animate.css.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{asset('backend/libs/bootstrap-datepicker/bootstrap-datepicker.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset_url('backend/libs/animate.css/animate.css.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset_url('backend/libs/bootstrap-datepicker/bootstrap-datepicker.min.css')}}" rel="stylesheet" type="text/css" />
 @endsection
 @section('content')
     <div class="container-fluid">
@@ -154,7 +154,7 @@
                                     <td>{{ $list->operator }}</td>
                                     <td>{{ $list->tanggal }}</td>
                                     <td>
-                                        <button type="button" class="btn btn-{{ $list->image && $list->status == 1 ? 'success' : 'primary' }} btn-amdbtn btn-sm upload" data-id="{{ $list->id }}" data-code="{{ $list->code }}" data-status="{{ $list->status }}" data-image="{{ $list->image ? asset($list->image) : '' }}">
+                                        <button type="button" class="btn btn-{{ $list->image && $list->status == 1 ? 'success' : 'primary' }} btn-amdbtn btn-sm upload" data-id="{{ $list->id }}" data-code="{{ $list->code }}" data-status="{{ $list->status }}" data-image="{{ $list->image ? asset_url($list->image) : '' }}">
                                             {{ $list->image && $list->status == 1 ? 'Detail' : 'Edit' }}
                                         </button>
                                     </td>
@@ -263,7 +263,7 @@
     </div>
 @endsection
 @section('script')
-    <script src="{{asset('backend/libs/bootstrap-datepicker/bootstrap-datepicker.min.js')}}"></script>
+    <script src="{{asset_url('backend/libs/bootstrap-datepicker/bootstrap-datepicker.min.js')}}"></script>
     <script type="application/javascript">
         $(window).on('load', function(){
             var onModal = false;

@@ -7,14 +7,14 @@
     <meta content="Powerfull dashboard Admin" name="description" />
     <meta content="aanzr.io" name="author" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <link rel="shortcut icon" href="{{ asset('assets/images/favicon.png') }}">
+    <link rel="shortcut icon" href="{{ asset_url('assets/images/favicon.png') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
         
-    <link href="{{asset('backend/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{asset('backend/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" id="bs-default-stylesheet" />
-    <link href="{{asset('backend/css/custom.css')}} " rel="stylesheet" type="text/css"/>
+    <link href="{{asset_url('backend/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset_url('backend/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" id="bs-default-stylesheet" />
+    <link href="{{asset_url('backend/css/custom.css')}} " rel="stylesheet" type="text/css"/>
     @yield('css')
-    <link href="{{asset('backend/css/app.min.css')}} " rel="stylesheet" type="text/css" id="app-default-stylesheet" />
+    <link href="{{asset_url('backend/css/app.min.css')}} " rel="stylesheet" type="text/css" id="app-default-stylesheet" />
 </head>
 <body data-layout-mode="horizontal" @yield('body-extra')>
     <div id="app">
@@ -85,8 +85,8 @@
         <script>document.write(new Date().getFullYear())</script> &copy; Asset Management Division BTN
     </footer>
     <!-- Scripts -->
-    <script src="{{asset('backend/js/vendor.min.js')}}"></script>
-    <script src="{{asset('backend/js/app.min.js')}}"></script>
+    <script src="{{asset_url('backend/js/vendor.min.js')}}"></script>
+    <script src="{{asset_url('backend/js/app.min.js')}}"></script>
     @yield('script')
 </body>
 </html>

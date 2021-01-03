@@ -30,3 +30,7 @@ function is_login()
     }
     return false;
 }
+function asset_url($string)
+{
+    return env('APP_URL').$string;
+}

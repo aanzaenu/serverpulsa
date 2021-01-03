@@ -1,6 +1,6 @@
 @extends('backend.layout.app')
 @section('css')
-    <link href="{{asset('backend/libs/select2/select2.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset_url('backend/libs/select2/select2.min.css')}}" rel="stylesheet" type="text/css" />
 @endsection
 @section('content')
     <div class="container-fluid">
@@ -66,7 +66,7 @@
     </div>
 @endsection
 @section('script')
-<script src="{{asset('backend/libs/select2/select2.min.js')}}"></script>
+<script src="{{asset_url('backend/libs/select2/select2.min.js')}}"></script>
 <script>
     $(document).ready(function(){
         $('select[data-toggle="select2"]').select2();

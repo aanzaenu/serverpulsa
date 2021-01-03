@@ -5,21 +5,21 @@
         <div class="logo-box pl-2 pl-lg-0">
             <a href="{{ route('home') }}" class="logo logo-dark">
                 <span class="logo-sm">
-                    <img src="{{asset('assets/images/logo.png')}}" alt="" class="d-inline-block w-100">
+                    <img src="{{asset_url('assets/images/logo.png')}}" alt="" class="d-inline-block w-100">
                     <!-- <span class="logo-lg-text-light">UBold</span> -->
                 </span>
                 <span class="logo-lg">
-                    <img src="{{asset('assets/images/logo.png')}}" alt="" class="d-inline-block w-100">
+                    <img src="{{asset_url('assets/images/logo.png')}}" alt="" class="d-inline-block w-100">
                     <!-- <span class="logo-lg-text-light">U</span> -->
                 </span>
             </a>
     
             <a href="{{ route('home') }}" class="logo logo-light">
                 <span class="logo-sm">
-                    <img src="{{asset('assets/images/logo.png')}}" alt="" class="d-inline-block w-100">
+                    <img src="{{asset_url('assets/images/logo.png')}}" alt="" class="d-inline-block w-100">
                 </span>
                 <span class="logo-lg">
-                    <img src="{{asset('assets/images/logo.png')}}" alt="" class="d-inline-block w-100">
+                    <img src="{{asset_url('assets/images/logo.png')}}" alt="" class="d-inline-block w-100">
                 </span>
             </a>
         </div>
