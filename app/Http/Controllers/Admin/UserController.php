@@ -193,7 +193,7 @@ class UserController extends Controller
                 $request->session()->flash('success', 'Sukses update '.$this->title);
                 if(is_cs())
                 {
-                    return redirect()->route('admin.home.index');
+                    return redirect()->route('admin.home');
                 }
                 return redirect()->route('admin.'.$this->uri.'.index');
             }else{
