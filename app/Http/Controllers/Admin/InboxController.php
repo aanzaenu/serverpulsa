@@ -41,7 +41,7 @@ class InboxController extends Controller
     }
     public function search(Request $request)
     {
-        if(is_admin())
+        if(is_admin() || is_cs())
         {
             if(!empty($request->get('query')) || !empty($request->get('orderby')) || !empty($request->get('from')) || !empty($request->get('to')) || !empty($request->get('operator')))
             {
@@ -106,7 +106,7 @@ class InboxController extends Controller
     }
     public function create()
     {
-        if(is_admin())
+        if(is_admin() || is_cs())
         {
             $data['title'] = "Tambah ".$this->title." - ".env('APP_NAME', 'Awesome Website');
             $data['pagetitle'] = "Tambah ".$this->title;
@@ -118,7 +118,7 @@ class InboxController extends Controller
     }
     public function store(Request $request, Category $category)
     {
-        if(is_admin())
+        if(is_admin() || is_cs())
         {
             $validasi =[
                     'name' => ['required','unique:categories'],
@@ -147,7 +147,7 @@ class InboxController extends Controller
     }
     public function edit(Category $category)
     {
-        if(is_admin())
+        if(is_admin() || is_cs())
         {
             $data['row'] = $category;
             $data['title'] = "Edit ".$this->title." - ".env('APP_NAME', 'Awesome Website');
@@ -160,7 +160,7 @@ class InboxController extends Controller
     }
     public function update(Request $request, Category $category)
     {
-        if(is_admin())
+        if(is_admin() || is_cs())
         {
             $validasi =[
                     'name' => ['required','unique:categories,name,'.$category->id.',id'],
@@ -189,7 +189,7 @@ class InboxController extends Controller
     }
     public function destroy(Request $request, Category $category)
     {
-        if(is_admin())
+        if(is_admin() || is_cs())
         {
             $category->delete();
             $request->session()->flash('success', $this->title.' dihapus!');
@@ -199,9 +199,8 @@ class InboxController extends Controller
         }
     }
     public function deletemass(Request $request)
-    {
-        
-        if(is_admin())
+    {        
+        if(is_admin() || is_cs())
         {
             $ids = explode(",", $request->ids);  
             foreach($ids as $key=> $id)
