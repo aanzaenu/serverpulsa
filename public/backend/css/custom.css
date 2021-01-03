@@ -1,0 +1,168 @@
+.checkbox-amdbtn input[type="checkbox"]:checked + label::before {
+	background-color: #006ab1;
+	border-color: #006ab1;
+}
+.checkbox-amdbtn input[type="checkbox"]:checked + label::after {
+	border-color: #fff;
+}
+.btn-amdbtn {
+	color: #fff;
+	background-color: #006ab1;
+	border-color: #006ab1;
+	box-shadow: 0 0 0 rgba(50, 58, 70, 0.5);
+}
+.text-amdbtn {
+	color: #006ab1;
+}
+table.mytable thead .sorting{
+	position: relative;
+	min-width: 150px;
+}
+table.mytable thead .sorting::before, table.mytable thead .sorting_asc::before, table.mytable thead .sorting_asc_disabled::before, table.mytable thead .sorting_desc::before, table.mytable thead .sorting_desc_disabled::before {
+	right: 1em;
+	content: "\f0de";
+	font-family: "Font Awesome 5 Free";
+	font-weight: 900;
+	font-size: 1rem;
+}
+table.mytable thead .sorting::after, table.mytable thead .sorting_asc::after, table.mytable thead .sorting_asc_disabled::after, table.mytable thead .sorting_desc::after, table.mytable thead .sorting_desc_disabled::after {
+	content: "\f0dd";
+	font-family: 'Font Awesome 5 Free';
+	font-weight: 900;
+	right: 16px;
+	font-size: 1rem;
+}
+table.mytable thead .sorting::after, table.mytable thead .sorting::before, table.mytable thead .sorting_asc::after, table.mytable thead .sorting_asc::before, table.mytable thead .sorting_asc_disabled::after, table.mytable thead .sorting_asc_disabled::before, table.mytable thead .sorting_desc::after, table.mytable thead .sorting_desc::before, table.mytable thead .sorting_desc_disabled::after, table.mytable thead .sorting_desc_disabled::before {
+	position: absolute;
+	bottom: .7em;
+	display: block;
+	opacity: .3;
+}
+table.mytable thead .sorting_asc::before, table.mytable thead .sorting_desc::after {
+	opacity: 1;
+}
+.on-hover{
+	position: absolute;
+	background-color: rgba(0,0,0,0.8);
+	background-position: center;
+	background-size: cover;
+	top: 100%;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	overflow: hidden;
+	transition-timing-function: ease-out;
+	transition: 0.2s;
+	cursor: pointer;
+	flex-direction: column;
+}
+.on-hover i{
+	font-size: 22px;
+}
+.kover{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	overflow: hidden;
+	position: absolute;
+	top:0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background-color: rgba(0,0,0,0.5);
+}
+.innerlistimage:hover .on-hover, .kontainergambar:hover .on-hover{
+	top: 0;
+	transition-timing-function: ease-in;
+	transition: 0.2s;
+}
+.card-box.product-box{
+	box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
+}
+.listing-image{
+	background-color: #FFFFFF;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+	position: relative;
+	overflow: hidden;
+	transition: all .2s ease-in-out;
+	-moz-transition: all .2s ease-in-out;
+	-webkit-transition: all .2s ease-in-out;
+	-o-transition: all .2s ease-in-out;
+	-ms-transition: all .2s ease-in-out;
+}
+a.product-list:hover .listing-image{
+	transition: all .2s ease-in-out;
+	-moz-transition: all .2s ease-in-out;
+	-webkit-transition: all .2s ease-in-out;
+	-o-transition: all .2s ease-in-out;
+	-ms-transition: all .2s ease-in-out;
+	transform: scale(1.1);
+	-webkit-transform: scale(1.1);
+	-moz-transform: scale(1.1);
+	-o-transform: scale(1.1);
+	-ms-transform: scale(1.1);
+
+}
+.price-tag{
+	position: absolute;
+	bottom: 20px;
+	left: 15px;
+	z-index: 9;
+}
+.price-tag.sales{
+	position: absolute;
+	bottom: 60px;
+	left: 15px;
+	z-index: 9;
+	text-decoration: line-through;
+}
+.coret{
+	text-decoration: line-through;
+}
+.navbar-custom{
+	box-shadow: 0 0 1rem 0 rgba(0,0,0,.15)!important;
+}
+
+.footers{
+	background-color: #eeeff3;
+}
+.slider-detail{
+	background-color: #FFFFFF;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+	position: relative;
+	overflow: hidden;
+	cursor: pointer;	
+}
+.icon-zoom{
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(0,0,0,0.5);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: #FFFFFF;
+	opacity: 0;
+	transition: all .2s ease-in-out;
+	-moz-transition: all .2s ease-in-out;
+	-webkit-transition: all .2s ease-in-out;
+	-o-transition: all .2s ease-in-out;
+	-ms-transition: all .2s ease-in-out;
+}
+.carousel-item:hover .icon-zoom{
+	opacity: 1;
+	transition: all .2s ease-in-out;
+	-moz-transition: all .2s ease-in-out;
+	-webkit-transition: all .2s ease-in-out;
+	-o-transition: all .2s ease-in-out;
+	-ms-transition: all .2s ease-in-out;
+}

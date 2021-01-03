@@ -22,5 +22,19 @@ Auth::routes([
     'reset' => false
 ]);
 
-Route::get('/home', 'HomeController@index')->name('home');
+//Route::get('/home', 'HomeController@index')->name('home');
 Route::post('/inbox/apdet', 'InboxController@apdet')->name('inbox.apdet');
+Route::post('/inbox/unduh', 'InboxController@unduh')->name('inbox.unduh');
+
+Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function(){
+    Route::get('/', 'DashboardController@index')->name('home');
+
+    Route::resource('inboxes','InboxController', ['except' => ['show']]);
+    Route::any('/inboxes/search','InboxController@search')->name('inboxes.search');
+    
+    Route::resource('users','UserController', ['except' => ['show']]);
+    Route::any('/users/search','UserController@search')->name('users.search');
+    Route::post('/users/deletemass','UserController@deletemass')->name('users.deletemass');
+    Route::post('/users/ajaxupdate', 'UserController@ajaxupdate')->name('users.ajaxupdate');
+    Route::get('/users/profile', 'UserController@profile')->name('users.profile');
+});

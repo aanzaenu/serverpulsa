@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -36,5 +38,39 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+    public function redirectTo()
+    {
+        if(Auth::user()->hasAnyRoles(['Admin', 'CS']))
+        {
+            $this->redirectTo = route('admin.home');
+        }else{
+            $this->redirectTo = route('main');
+        }
+        return $this->redirectTo;
+    }
+    public function login(Request $request)
+    {  
+        $input = $request->all();
+        $this->validate($request, [
+                'username' => 'required',
+                'password' => 'required',
+            ],
+            [
+                'username.required' => 'Email / Username harus diisi',
+                'password.required' => 'Password harus diisi',
+            ]
+        );
+        $fieldType = filter_var($request->username, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+        if(Auth::attempt(array($fieldType => $input['username'], 'password' => $input['password'])))
+        {
+            if(Auth::user()->hasAnyRoles(['Admin', 'CS']))
+            {
+                return redirect()->route('admin.home');
+            }
+            return redirect()->route('main');
+        }else{
+            return redirect()->route('login')->with('error','Login Wrong');
+        }
     }
 }

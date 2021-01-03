@@ -3,91 +3,62 @@
 namespace App\Http\Controllers;
 
 use App\Inbox;
+use App\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Image;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use File;
+use App\Exports\InboxExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class InboxController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Inbox  $inbox
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Inbox $inbox)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Inbox  $inbox
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Inbox $inbox)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Inbox  $inbox
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Inbox $inbox)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Inbox  $inbox
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Inbox $inbox)
-    {
-        //
-    }
     public function inbox(Request $request)
+    {
+        //return $request->data;
+        if(!empty($request))
+        {
+            $pengirim = $request->get('pengirim');
+            $latest = Inbox::orderby('code', 'DESC')->first();
+            $lastid = 0;
+            if($latest)
+            {
+                $lastid = $latest->code;
+            }
+            $cek = Inbox::where('code', $request->get('code'))->first();
+            if(!$cek){
+                if(intval($request->get('code')) > $lastid)
+                {
+                    //if(!empty($pengirim))
+                    //{
+                        //if (in_array($request->get('sender'), $pengirim))
+                        //{
+                            $array = array(
+                                'code' => $request->get('code'),
+                                'sender' => $request->get('sender'),
+                                'transaction_id' => $request->get('transactionid'),
+                                'status' => 0,
+                                'message' => $request->get('message'),
+                                'tanggal' => $request->get('tgl'),
+                                'op' => 0
+                            );
+                            Inbox::create($array);
+                        //}
+                    //}
+                    return response()->json([
+                        'status' => 'sukses'
+                    ], 200);
+                }
+            }
+
+            return response()->json([
+                'status' => 'gagal'
+            ], 200);
+        }
+    }
+    public function inboxbak(Request $request)
     {
         //return $request->data;
         if(!empty($request->data))
@@ -170,10 +141,10 @@ class InboxController extends Controller
         if($save)
         {
             $request->session()->flash('success', 'Data Updated');
-            return redirect('/home');
+            return redirect('/admin/inboxes');
         }
         $request->session()->flash('error', 'Error');
-        return redirect('/home');
+        return redirect('/admin/inboxes');
     }
     public function lastinbox()
     {
@@ -183,5 +154,25 @@ class InboxController extends Controller
             return intval($model->code);
         }
         return 0;
+    }
+    public function unduh(Request $request)
+    {
+        return Excel::download(new InboxExport($request->op, $request->from, $request->to), 'report.xlsx');
+    }
+    public function saldo(Request $request)
+    {
+        if(!empty($request))
+        {
+            $model = Setting::where('key', 'saldo');
+            $model->value = intval($request->get('saldo'));
+            $model->save();
+            return response()->json([
+                'status' => 'sukses'
+            ], 200);
+            
+        }
+        return response()->json([
+            'status' => 'gagal'
+        ], 200);
     }
 }
