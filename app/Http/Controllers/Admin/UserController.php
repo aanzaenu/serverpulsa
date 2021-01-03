@@ -161,7 +161,7 @@ class UserController extends Controller
     }
     public function update(Request $request, User $user)
     {
-        if(is_admin())
+        if(is_admin() || is_cs())
         {
             $validasi =[
                     'email' => ['required','unique:users,email,'.$user->id.',id'],
