@@ -134,17 +134,17 @@ class InboxController extends Controller
                 $model->thumb = $path.$thumb;
             }else{
                 $request->session()->flash('error', 'Error Image Format');
-                return redirect('/home');
+                return redirect()->route('admin.inboxes.index');
             }
         }
         $save = $model->save();
         if($save)
         {
             $request->session()->flash('success', 'Data Updated');
-            return redirect('/admin/inboxes');
+            return redirect()->route('admin.inboxes.index');
         }
         $request->session()->flash('error', 'Error');
-        return redirect('/admin/inboxes');
+        return redirect()->route('admin.inboxes.index');
     }
     public function lastinbox()
     {
