@@ -32,7 +32,11 @@
                             <h4>Pulsa Sekarang: Rp.{{ number_format($saldo->value) }}</h4>
                         </div>
                         <div class="d-block text-center">
-                            <h6>Last Update: {{ $lastupdate->value }}</h6>
+                            @php
+                                $last = strtotime($lastupdate->value);
+                                $lastupdates = date('d M Y h:i', $last);
+                            @endphp
+                            <h6>Last Update: {{ $lastupdates }}</h6>
                         </div>
                     </div>
                 </div>
