@@ -12,9 +12,13 @@ class SettingsTableSeeder extends Seeder
      */
     public function run()
     {
-        $admin = Setting::create([
+        Setting::create([
             'key' => 'saldo',
             'value' => 0
+        ]);
+        Setting::create([
+            'key' => 'lastupdate',
+            'value' => date('Y-m-d H:i:s', time())
         ]);
     }
 }

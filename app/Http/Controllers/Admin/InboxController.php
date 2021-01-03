@@ -26,6 +26,7 @@ class InboxController extends Controller
             $data['lists'] = Inbox::orderBy('code', 'DESC')->paginate(20);
             $data['users'] = User::orderBy('name', 'ASC')->get();
             $data['saldo'] = Setting::where('key', 'saldo')->first();
+            $data['lastupdate'] = Setting::where('key', 'lastupdate')->first();
             foreach($data['lists'] as $key=> $val)
             {
                 $data['lists'][$key]->operator = '-';
@@ -96,6 +97,7 @@ class InboxController extends Controller
                 }
                 $data['users'] = User::orderBy('name', 'ASC')->get();
                 $data['saldo'] = Setting::where('key', 'saldo')->first();
+                $data['lastupdate'] = Setting::where('key', 'lastupdate')->first();
                 return view('backend.'.$this->uri.'.list', $data);
             }else{
                 return redirect()->route('admin.'.$this->uri.'.index');
