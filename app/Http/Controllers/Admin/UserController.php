@@ -191,6 +191,10 @@ class UserController extends Controller
             {
                 $user->roles()->sync($request->role);
                 $request->session()->flash('success', 'Sukses update '.$this->title);
+                if(is_cs())
+                {
+                    return redirect()->route('admin.home.index');
+                }
                 return redirect()->route('admin.'.$this->uri.'.index');
             }else{
                 $request->session()->flash('error', 'Error saat update '.$this->title.'!');
