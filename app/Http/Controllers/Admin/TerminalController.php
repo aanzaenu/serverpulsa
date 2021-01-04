@@ -36,7 +36,8 @@ class TerminalController extends Controller
                 if(!empty($request->get('query')))
                 {
                     $model->where(function($query) use ($request){
-                        return $query->where('name', 'like', '%'.strip_tags($request->get('query')).'%');
+                        return $query->where('name', 'like', '%'.strip_tags($request->get('query')).'%')
+                                ->orWhere('terminal_id', 'like', '%'.strip_tags($request->get('query')).'%');
                     });
                 }
                 if($request->get('orderby'))
