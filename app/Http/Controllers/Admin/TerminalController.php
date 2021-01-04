@@ -80,13 +80,16 @@ class TerminalController extends Controller
         if(is_admin())
         {
             $validasi =[
+                    'terminal_id' => ['required', 'unique:terminals'],
                     'name' => ['required'],
                 ];
             $msg = [
+                'terminal_id.required' => 'Terminal ID tidak boleh kosong',
                 'name.required' => 'Nama tidak boleh kosong',
             ];
+            $terminal->terminal_id = trim($request->terminal_id);
             $terminal->name = trim($request->name);
-    
+            $request->validate($validasi, $msg);
             if($terminal->save())
             {
                 $request->session()->flash('success', $this->title.' baru ditambahkan');
@@ -117,13 +120,16 @@ class TerminalController extends Controller
         {
             $validasi =[
                     'name' => ['required'],
+                    'terminal_id' => ['required', 'unique:terminals,terminal_id,'.$terminal->id.',id'],
                 ];
             $msg = [
                 'name.required' => 'Nama tidak boleh kosong',
+                'terminal_id.required' => 'Terminal ID tidak boleh kosong',
             ];
             $request->validate($validasi, $msg);
 
             $terminal->name = trim($request->name);
+            $terminal->terminal_id = trim($request->name);
     
             if($terminal->save())
             {

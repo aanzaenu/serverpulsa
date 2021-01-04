@@ -93,6 +93,11 @@
                                             $kueri = 'query='.request()->get('query').'&';
                                         }
                                     ;?>
+                                    <th class="sorting @if($order_by =='terminal_id') @if($order == 'asc') sorting_asc @else sorting_desc @endif @endif">
+                                        <a class="text-dark" href="{{ route('admin.'.$uri.'.search').'?'.$kueri.'orderby=terminal_id&order='.$urut }}">
+                                            Terminal ID
+                                        </a>
+                                    </th>
                                     <th class="sorting @if($order_by =='name') @if($order == 'asc') sorting_asc @else sorting_desc @endif @endif">
                                         <a class="text-dark" href="{{ route('admin.'.$uri.'.search').'?'.$kueri.'orderby=name&order='.$urut }}">
                                             Nama

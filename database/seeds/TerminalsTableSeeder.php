@@ -13,13 +13,16 @@ class TerminalsTableSeeder extends Seeder
     public function run()
     {
         Terminal::create([
-            'name'=> '#1 Dongle'
+            'name'=> '#1 Dongle',
+            'terminal_id' => 1,
         ]);
         Terminal::create([
-            'name'=> '#2 WG 79221614'
+            'name'=> '#2 WG 79221614',
+            'terminal_id' => 38,
         ]);
         Terminal::create([
-            'name'=> '#3 WG 79221619'
+            'name'=> '#3 WG 79221619',
+            'terminal_id' => 39,
         ]);
     }
 }

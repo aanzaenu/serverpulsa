@@ -27,6 +27,16 @@
                                 @csrf
                                 @method('POST')
                                 <div class="form-group">
+                                    <label for="terminal_id">Nama</label>
+                                    <input type="text" class="form-control @if($errors->has('terminal_id')) is-invalid @endif" id="terminal_id"  name="terminal_id"  placeholder="1" value="{{ old('terminal_id') }}">
+                                    <small id="terminal_idHelp" class="form-text text-muted">Harus sama dengan Terminal id di Otomax</small>                                 
+                                    @error('terminal_id')
+                                        <div class="invalid-feedback" role="feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
                                     <label for="name">Nama</label>
                                     <input type="text" class="form-control @if($errors->has('name')) is-invalid @endif" id="name"  name="name"  placeholder="#1 Dongle" value="{{ old('name') }}">                                    
                                     @error('name')
