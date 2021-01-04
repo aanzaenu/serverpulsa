@@ -52,24 +52,6 @@
                                         <div class="col-lg-9 mb-3">
                                             <div class="input-group">
                                                 <input type="text" name="query" class="form-control" placeholder="Cari Sesuatu" value="{{ request()->get('query') }}"/>
-                                                <select name="role" class="custom-select">
-                                                    <option value="">Semua Group</option>
-                                                    @foreach ($roles as $item)
-                                                        @php
-                                                            if($item->id == 3) break;
-                                                        @endphp
-                                                        <option value="{{ $item->id }}" {{ $item->id == request()->get('role') ? 'selected' : ''}}>{{ $item->name }}</option>
-                                                    @endforeach
-                                                </select>
-                                                <select name="terminal" class="custom-select">
-                                                    <option value="">Semua Terminal</option>
-                                                    @foreach ($terminals as $item)
-                                                        @php
-                                                            if($item->id == 3) break;
-                                                        @endphp
-                                                        <option value="{{ $item->id }}" {{ $item->id == request()->get('terminal') ? 'selected' : ''}}>{{ $item->name }}</option>
-                                                    @endforeach
-                                                </select>
                                                 <div class="input-group-append">
                                                     <button class="btn btn-amdbtn waves-effect waves-light" type="submit">Cari</button>
                                                 </div>
@@ -110,34 +92,12 @@
                                         {
                                             $kueri = 'query='.request()->get('query').'&';
                                         }
-                                        $role = '';
-                                        if(!empty(request()->get('role')))
-                                        {
-                                            $role = 'role='.request()->get('role').'&';
-                                        }
-                                        $terminal = '';
-                                        if(!empty(request()->get('terminal')))
-                                        {
-                                            $terminal = 'terminal='.request()->get('terminal').'&';
-                                        }
                                     ;?>
                                     <th class="sorting @if($order_by =='name') @if($order == 'asc') sorting_asc @else sorting_desc @endif @endif">
-                                        <a class="text-dark" href="{{ route('admin.'.$uri.'.search').'?'.$kueri.$role.$terminal.'orderby=name&order='.$urut }}">
-                                            Username
-                                        </a>
-                                    </th>
-                                    <th class="sorting @if($order_by =='name') @if($order == 'asc') sorting_asc @else sorting_desc @endif @endif">
-                                        <a class="text-dark" href="{{ route('admin.'.$uri.'.search').'?'.$kueri.$role.$terminal.'orderby=name&order='.$urut }}">
+                                        <a class="text-dark" href="{{ route('admin.'.$uri.'.search').'?'.$kueri.'orderby=name&order='.$urut }}">
                                             Nama
                                         </a>
                                     </th>
-                                    <th class="sorting @if($order_by =='code_location') @if($order == 'asc') sorting_asc @else sorting_desc @endif @endif">
-                                        <a class="text-dark" href="{{ route('admin.'.$uri.'.search').'?'.$kueri.$role.$terminal.'orderby=code_location&order='.$urut }}">
-                                            Email
-                                        </a>
-                                    </th>
-                                    <th>Group</th>
-                                    <th>Terminal</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -150,11 +110,7 @@
                                             <label></label>
                                         </div>
                                     </th>
-                                    <td>{{ $list->username }}</td>
                                     <td>{{ $list->name }}</td>
-                                    <td>{{ $list->email }}</td>
-                                    <td>{{ $list->roles()->first()->name }}</td>
-                                    <td>{{ $list->terminal }}</td>
                                     <td>
                                         <div class="btn-group">
                                             <button type="button" class="btn btn-amdbtn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

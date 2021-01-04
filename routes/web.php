@@ -35,6 +35,9 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function(){
     Route::resource('users','UserController', ['except' => ['show']]);
     Route::any('/users/search','UserController@search')->name('users.search');
     Route::post('/users/deletemass','UserController@deletemass')->name('users.deletemass');
-    Route::post('/users/ajaxupdate', 'UserController@ajaxupdate')->name('users.ajaxupdate');
     Route::get('/users/profile', 'UserController@profile')->name('users.profile');
+
+    Route::resource('terminals','TerminalController', ['except' => ['show']]);
+    Route::any('/terminals/search','TerminalController@search')->name('terminals.search');
+    Route::post('/terminals/deletemass','TerminalController@deletemass')->name('terminals.deletemass');
 });

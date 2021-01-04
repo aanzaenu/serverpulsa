@@ -61,6 +61,12 @@
                                                         <option value="{{ $user->id }}" {{ request()->get('operator') == $user->id ? 'selected' : '' }}>{{ $user->name }}</option>
                                                     @endforeach
                                                 </select>
+                                                <select name="terminal" class="custom-select">
+                                                    <option value="">Semua Terminal</option>
+                                                    @foreach ($terminals as $user)
+                                                        <option value="{{ $user->id }}" {{ request()->get('operator') == $user->id ? 'selected' : '' }}>{{ $user->name }}</option>
+                                                    @endforeach
+                                                </select>
                                                 <div class="input-group-append">
                                                     <button class="btn btn-amdbtn waves-effect waves-light" type="submit">Cari/Filter</button>
                                                     <button type="button" class="btn btn-dark waves-effect waves-light download">Download</button>
@@ -111,14 +117,19 @@
                                         {
                                             $operator = 'operator='.request()->get('operator').'&';
                                         }
+                                        $terminal = '';
+                                        if(!empty(request()->get('terminal')))
+                                        {
+                                            $terminal = 'terminal='.request()->get('terminal').'&';
+                                        }
                                     ;?>
                                     <th class="sorting @if($order_by =='code') @if($order == 'asc') sorting_asc @else sorting_desc @endif @endif">
-                                        <a class="text-dark" href="{{ route('admin.'.$uri.'.search').'?'.$kueri.$from.$to.$operator.'&orderby=code&order='.$urut }}">
+                                        <a class="text-dark" href="{{ route('admin.'.$uri.'.search').'?'.$kueri.$from.$to.$operator.$terminal.'&orderby=code&order='.$urut }}">
                                             Kode
                                         </a>
                                     </th>
                                     <th class="sorting @if($order_by =='sender') @if($order == 'asc') sorting_asc @else sorting_desc @endif @endif">
-                                        <a class="text-dark" href="{{ route('admin.'.$uri.'.search').'?'.$kueri.$from.$to.$operator.'orderby=sender&order='.$urut }}">
+                                        <a class="text-dark" href="{{ route('admin.'.$uri.'.search').'?'.$kueri.$from.$to.$operator.$terminal.'orderby=sender&order='.$urut }}">
                                             Pengirim
                                         </a>
                                     </th>
@@ -126,15 +137,16 @@
                                         Pesan
                                     </th>
                                     <th class="sorting @if($order_by =='status') @if($order == 'asc') sorting_asc @else sorting_desc @endif @endif">
-                                        <a class="text-dark" href="{{ route('admin.'.$uri.'.search').'?'.$kueri.$from.$to.$operator.'orderby=status&order='.$urut }}">
+                                        <a class="text-dark" href="{{ route('admin.'.$uri.'.search').'?'.$kueri.$from.$to.$operator.$terminal.'orderby=status&order='.$urut }}">
                                             Status
                                         </a>
                                     </th>
                                     <th>
                                         Operator
                                     </th>
+                                    <th>Terminal</th>
                                     <th class="sorting @if($order_by =='tanggal') @if($order == 'asc') sorting_asc @else sorting_desc @endif @endif">
-                                        <a class="text-dark" href="{{ route('admin.'.$uri.'.search').'?'.$kueri.$from.$to.$operator.'orderby=tanggal&order='.$urut }}">
+                                        <a class="text-dark" href="{{ route('admin.'.$uri.'.search').'?'.$kueri.$from.$to.$operator.$terminal.'orderby=tanggal&order='.$urut }}">
                                             Waktu
                                         </a>
                                     </th>
@@ -159,6 +171,7 @@
                                         @endif
                                     </td>
                                     <td>{{ $list->operator }}</td>
+                                    <td>{{ $list->terminal }}</td>
                                     <td>{{ $list->tanggal }}</td>
                                     <td>
                                         <button type="button" class="btn btn-{{ $list->image && $list->status == 1 ? 'success' : 'primary' }} btn-amdbtn btn-sm upload" data-id="{{ $list->id }}" data-code="{{ $list->code }}" data-status="{{ $list->status }}" data-image="{{ $list->image ? asset_url($list->image) : '' }}">

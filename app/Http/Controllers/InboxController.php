@@ -42,6 +42,7 @@ class InboxController extends Controller
                                 'status' => 0,
                                 'message' => $request->get('message'),
                                 'tanggal' => $request->get('tgl'),
+                                'terminal' => $request->get('terminal'),
                                 'op' => 0
                             );
                             Inbox::create($array);

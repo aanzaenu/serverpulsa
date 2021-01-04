@@ -7,7 +7,9 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Inbox;
 use App\Setting;
+use App\Terminal;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
 class InboxController extends Controller
 {
@@ -23,16 +25,29 @@ class InboxController extends Controller
             $data['title'] = $this->title." - ".env('APP_NAME', 'Awesome Website');
             $data['pagetitle'] = $this->title;
             $data['uri'] = $this->uri;
-            $data['lists'] = Inbox::orderBy('code', 'DESC')->paginate(20);
+            if(is_cs())
+            {
+                $data['lists'] = Inbox::where('terminal', Auth::user()->terminal)->orderBy('code', 'DESC')->paginate(20);
+            }else{
+                $data['lists'] = Inbox::orderBy('code', 'DESC')->paginate(20);
+            }
             $data['users'] = User::orderBy('name', 'ASC')->get();
             $data['saldo'] = Setting::where('key', 'saldo')->first();
             $data['lastupdate'] = Setting::where('key', 'lastupdate')->first();
+            $data['terminals'] = Terminal::orderBy('name', 'ASC')->get();
             foreach($data['lists'] as $key=> $val)
             {
                 $data['lists'][$key]->operator = '-';
                 if(User::find($val->op))
                 {
                     $data['lists'][$key]->operator = User::find($val->op)->name;
+                }
+                $terminal = Terminal::find($val->terminal);
+                if($terminal)
+                {
+                    $data['lists'][$key]->terminal = $terminal->name;
+                }else{
+                    $data['lists'][$key]->terminal = '-';
                 }
             }
             return view('backend.'.$this->uri.'.list', $data);
@@ -44,9 +59,14 @@ class InboxController extends Controller
     {
         if(is_admin() || is_cs())
         {
-            if(!empty($request->get('query')) || !empty($request->get('orderby')) || !empty($request->get('from')) || !empty($request->get('to')) || !empty($request->get('operator')))
+            if(!empty($request->get('query')) || !empty($request->get('orderby')) || !empty($request->get('from')) || !empty($request->get('to')) || !empty($request->get('operator')) || !empty($request->get('terminal')))
             {
-                $model = Inbox::whereNotNull('code');
+                if(is_cs())
+                {
+                    $model = Inbox::where('terminal', Auth::user()->terminal);
+                }else{
+                    $model = Inbox::whereNotNull('code');
+                }
                 if(!empty($request->get('query')))
                 {
                     $model->where(function($query) use ($request){
@@ -71,6 +91,10 @@ class InboxController extends Controller
                 {
                     $model->where('op', $request->get('operator'));
                 }
+                if(!empty($request->get('terminal')))
+                {
+                    $model->where('terminal', $request->get('terminal'));
+                }
                 if($request->get('orderby'))
                 {
                     if($request->get('order') == 'asc')
@@ -94,10 +118,18 @@ class InboxController extends Controller
                     {
                         $data['lists'][$key]->operator = User::find($val->op)->name;
                     }
+                    $terminal = Terminal::find($val->terminal);
+                    if($terminal)
+                    {
+                        $data['lists'][$key]->terminal = $terminal->name;
+                    }else{
+                        $data['lists'][$key]->terminal = '-';
+                    }
                 }
                 $data['users'] = User::orderBy('name', 'ASC')->get();
                 $data['saldo'] = Setting::where('key', 'saldo')->first();
                 $data['lastupdate'] = Setting::where('key', 'lastupdate')->first();
+                $data['terminals'] = Terminal::orderBy('name', 'ASC')->get();
                 return view('backend.'.$this->uri.'.list', $data);
             }else{
                 return redirect()->route('admin.'.$this->uri.'.index');

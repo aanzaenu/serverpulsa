@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\User;
 use App\Role;
+use App\Terminal;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -26,9 +27,20 @@ class UserController extends Controller
             $data['pagetitle'] = $this->title;
             $data['uri'] = $this->uri;
             $data['roles'] = Role::orderBy('name', 'ASC')->get();
+            $data['terminals'] = Terminal::orderBy('name', 'ASC')->get();
             $data['lists'] = User::with('roles')->whereHas('roles', function($query){
                 $query->whereIn('roles.id', $this->role);
             })->orderBy('id', 'DESC')->paginate(20);
+            foreach($data['lists'] as $key=>$val)
+            {
+                $terminal = Terminal::find($val->terminal);
+                if($terminal)
+                {
+                    $data['lists'][$key]->terminal = $terminal->name;
+                }else{
+                    $data['lists'][$key]->terminal = '-';
+                }
+            }
             return view('backend.'.$this->uri.'.list', $data);
         }else{
             abort(404);
@@ -38,7 +50,7 @@ class UserController extends Controller
     {
         if(is_admin())
         {
-            if(!empty($request->get('query')) || !empty($request->get('orderby')) || !empty($request->get('role')))
+            if(!empty($request->get('query')) || !empty($request->get('orderby')) || !empty($request->get('role')) || !empty($request->get('terminal')))
             {
                 $model = User::with('roles');
                 if($request->get('role'))
@@ -60,6 +72,10 @@ class UserController extends Controller
                                     ->orWhere('email', 'like', '%'.strip_tags($request->get('query')).'%');
                     });
                 }
+                if(!empty($request->get('terminal')))
+                {
+                    $model->where('terminal', $request->get('terminal'));
+                }
                 if($request->get('orderby'))
                 {
                     if($request->get('order') == 'asc')
@@ -75,8 +91,19 @@ class UserController extends Controller
                 $data['title'] = "Pencarian ".$this->title." - ".env('APP_NAME', 'Awesome Website');
                 $data['pagetitle'] = "Pencarian ".$this->title;
                 $data['uri'] = $this->uri;
-                $data['lists'] = $model->paginate(20);
                 $data['roles'] = Role::orderBy('name', 'ASC')->get();
+                $data['terminals'] = Terminal::orderBy('name', 'ASC')->get();
+                $data['lists'] = $model->paginate(20);
+                foreach($data['lists'] as $key=>$val)
+                {
+                    $terminal = Terminal::find($val->terminal);
+                    if($terminal)
+                    {
+                        $data['lists'][$key]->terminal = $terminal->name;
+                    }else{
+                        $data['lists'][$key]->terminal = '-';
+                    }
+                }
                 return view('backend.'.$this->uri.'.list', $data);
             }else{
                 return redirect()->route('admin.'.$this->uri.'.index');
@@ -93,6 +120,7 @@ class UserController extends Controller
             $data['pagetitle'] = "Tambah ".$this->title;
             $data['uri'] = $this->uri;
             $data['roles'] = Role::orderBy('name', 'ASC')->get();
+            $data['terminals'] = Terminal::orderBy('name', 'ASC')->get();
             return view('backend.'.$this->uri.'.create', $data);
         }else{
             abort(404);
@@ -107,6 +135,7 @@ class UserController extends Controller
                     'name' => ['required'],
                     'email' => ['required','unique:users'],
                     'role' => ['required'],
+                    'terminal' => ['required'],
                     'password' => ['required', 'min:8'],
                     'confirm_password' => ['required', 'same:password'],
                 ];
@@ -117,6 +146,7 @@ class UserController extends Controller
                 'email.required' => 'Email tidak boleh kosong',
                 'email.unique' => 'Eama sudah terdaftar',
                 'role.required' => 'Group harus dipilih',
+                'terminal.required' => 'Terminal harus dipilih',
                 'password.required' => 'Password tidak boleh kosong',
                 'password.min' => 'Password minimal 8 karakter',
                 'confirm_password.required' => 'Konfirmasi Password tidak boleh kosong',
@@ -127,6 +157,7 @@ class UserController extends Controller
             $user->name = trim($request->name);
             $user->username = Str::slug(trim($request->username), '.');
             $user->email = trim($request->email);
+            $user->terminal = trim($request->terminal);
             $user->password = Hash::make($request->input('password'));
     
             if($user->save())
@@ -154,6 +185,7 @@ class UserController extends Controller
             $data['pagetitle'] = "Edit ".$this->title;
             $data['uri'] = $this->uri;
             $data['roles'] = Role::orderBy('name', 'ASC')->get();
+            $data['terminals'] = Terminal::orderBy('name', 'ASC')->get();
             return view('backend.'.$this->uri.'.edit', $data);
         }else{
             abort(404);
@@ -167,12 +199,14 @@ class UserController extends Controller
                     'email' => ['required','unique:users,email,'.$user->id.',id'],
                     'name' => ['required'],
                     'role' => ['required'],
+                    'terminal' => ['required'],
                 ];
             $msg = [
                 'email.required' => 'Email tidak boleh kosong',
                 'email.unique' => 'Email sudah terdaftar',
                 'name.required' => 'Nama tidak boleh kosong',
                 'role.required' => 'Group harus dipilih',
+                'terminal.required' => 'Terminal harus dipilih',
                 'password.required' => 'Password tidak boleh kosong',
                 'password.min' => 'Password minimal 8 karakter',
                 'confirm_password.required' => 'Konfirmasi Password tidak boleh kosong',
@@ -186,6 +220,7 @@ class UserController extends Controller
 
             $user->name = trim($request->name);
             $user->email = trim($request->email);
+            $user->terminal = trim($request->terminal);
     
             if($user->save())
             {
@@ -212,6 +247,7 @@ class UserController extends Controller
             $data['pagetitle'] = "Profile ".Auth::user()->name;
             $data['uri'] = $this->uri;
             $data['roles'] = Role::orderBy('name', 'ASC')->get();
+            $data['terminals'] = Terminal::orderBy('name', 'ASC')->get();
             return view('backend.'.$this->uri.'.edit', $data);
         }else{
             abort(404);
