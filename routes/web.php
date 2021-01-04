@@ -22,7 +22,9 @@ Auth::routes([
     'reset' => false
 ]);
 
-//Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', function(){
+    return redirect()->route('admin.home');
+});
 Route::post('/inbox/apdet', 'InboxController@apdet')->name('inbox.apdet');
 Route::post('/inbox/unduh', 'InboxController@unduh')->name('inbox.unduh');
 

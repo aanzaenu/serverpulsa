@@ -255,6 +255,11 @@ class UserController extends Controller
     }
     public function destroy(Request $request, User $user)
     {
+        if($user->id == 1)
+        {
+            $request->session()->flash('error', 'Admin utama tidak boleh dihapus');
+            return redirect()->route('admin.'.$this->uri.'.index');
+        }
         if(is_admin())
         {
             
@@ -280,6 +285,11 @@ class UserController extends Controller
             $Users = User::find($id);
             foreach($Users as $key=> $user)
             {
+                if($user->id == 1)
+                {
+                    $request->session()->flash('error', 'Admin utama tidak boleh dihapus');
+                    return redirect()->route('admin.'.$this->uri.'.index');
+                }
                 $number = $user->roles()->get();
                 if(count($number) > 0)
                 {
