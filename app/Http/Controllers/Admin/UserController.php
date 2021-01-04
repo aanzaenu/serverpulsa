@@ -33,7 +33,7 @@ class UserController extends Controller
             })->orderBy('id', 'DESC')->paginate(20);
             foreach($data['lists'] as $key=>$val)
             {
-                $terminal = Terminal::find($val->terminal);
+                $terminal = Terminal::where('terminal_id', $val->terminal)->first();
                 if($terminal)
                 {
                     $data['lists'][$key]->terminal = $terminal->name;
@@ -96,7 +96,7 @@ class UserController extends Controller
                 $data['lists'] = $model->paginate(20);
                 foreach($data['lists'] as $key=>$val)
                 {
-                    $terminal = Terminal::find($val->terminal);
+                    $terminal = Terminal::where('terminal_id', $val->terminal)->first();
                     if($terminal)
                     {
                         $data['lists'][$key]->terminal = $terminal->name;

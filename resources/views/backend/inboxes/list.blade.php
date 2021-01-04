@@ -63,8 +63,8 @@
                                                 </select>
                                                 <select name="terminal" class="custom-select">
                                                     <option value="">Semua Terminal</option>
-                                                    @foreach ($terminals as $user)
-                                                        <option value="{{ $user->id }}" {{ request()->get('operator') == $user->id ? 'selected' : '' }}>{{ $user->name }}</option>
+                                                    @foreach ($terminals as $terminal)
+                                                        <option value="{{ $terminal->terminal_id }}" {{ request()->get('terminal') == $terminal->terminal_id ? 'selected' : '' }}>{{ $terminal->name }}</option>
                                                     @endforeach
                                                 </select>
                                                 <div class="input-group-append">

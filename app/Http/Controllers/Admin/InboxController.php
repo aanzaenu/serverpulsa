@@ -42,7 +42,7 @@ class InboxController extends Controller
                 {
                     $data['lists'][$key]->operator = User::find($val->op)->name;
                 }
-                $terminal = Terminal::find($val->terminal);
+                $terminal = Terminal::where('terminal_id', $val->terminal)->first();
                 if($terminal)
                 {
                     $data['lists'][$key]->terminal = $terminal->name;
@@ -118,7 +118,7 @@ class InboxController extends Controller
                     {
                         $data['lists'][$key]->operator = User::find($val->op)->name;
                     }
-                    $terminal = Terminal::find($val->terminal);
+                    $terminal = Terminal::where('terminal_id', $val->terminal)->first();
                     if($terminal)
                     {
                         $data['lists'][$key]->terminal = $terminal->name;

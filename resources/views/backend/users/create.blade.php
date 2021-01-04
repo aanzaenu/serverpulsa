@@ -75,10 +75,7 @@
                                     <select id="terminal" name="terminal" class="form-control @if($errors->has('terminal')) is-invalid @endif"  data-toggle="select2">
                                         <option value="">Semua Terminal</option>
                                         @foreach ($terminals as $item)
-                                            @php
-                                                if($item->id == 3) break;
-                                            @endphp
-                                            <option value="{{ $item->id }}" {{ $item->id == old('terminal') ? 'selected' : ''}}>{{ $item->name }}</option>
+                                            <option value="{{ $item->terminal_id }}" {{ $item->terminal_id == old('terminal') ? 'selected' : ''}}>{{ $item->name }}</option>
                                         @endforeach
                                     </select>
                                     <small id="terminalHelp" class="form-text text-muted">Tidak Berpengaruh untuk Group Admin</small>
