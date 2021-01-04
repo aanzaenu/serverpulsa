@@ -115,6 +115,7 @@
                                             <label></label>
                                         </div>
                                     </th>
+                                    <td>{{ $list->terminal_id }}</td>
                                     <td>{{ $list->name }}</td>
                                     <td>
                                         <div class="btn-group">
