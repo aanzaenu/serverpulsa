@@ -58,9 +58,6 @@
                                     <select id="role" name="role" class="form-control @if($errors->has('role')) is-invalid @endif"  data-toggle="select2">
                                         <option value="">Semua Group</option>
                                         @foreach ($roles as $item)
-                                            @php
-                                                if($item->id == 3) break;
-                                            @endphp
                                             <option value="{{ $item->id }}" {{ $item->id == old('role') ? 'selected' : ''}}>{{ $item->name }}</option>
                                         @endforeach
                                     </select>

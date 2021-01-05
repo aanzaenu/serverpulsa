@@ -17,11 +17,11 @@ class UserController extends Controller
     {
         $this->uri = 'users';
         $this->title = 'User';
-        $this->role = [1, 2];
+        $this->role = [1, 2, 3];
     }
     public function index()
     {
-        if(is_admin())
+        if(is_admin() || is_subadmin())
         {
             $data['title'] = $this->title." - ".env('APP_NAME', 'Awesome Website');
             $data['pagetitle'] = $this->title;
@@ -48,7 +48,7 @@ class UserController extends Controller
     }
     public function search(Request $request)
     {
-        if(is_admin())
+        if(is_admin() || is_subadmin())
         {
             if(!empty($request->get('query')) || !empty($request->get('orderby')) || !empty($request->get('role')) || !empty($request->get('terminal')))
             {
@@ -114,7 +114,7 @@ class UserController extends Controller
     }
     public function create()
     {
-        if(is_admin())
+        if(is_admin() || is_subadmin())
         {
             $data['title'] = "Tambah ".$this->title." - ".env('APP_NAME', 'Awesome Website');
             $data['pagetitle'] = "Tambah ".$this->title;
@@ -128,7 +128,7 @@ class UserController extends Controller
     }
     public function store(Request $request, User $user)
     {
-        if(is_admin())
+        if(is_admin() || is_subadmin())
         {
             $validasi =[
                     'username' => ['required','unique:users'],
@@ -178,7 +178,7 @@ class UserController extends Controller
         {
             return redirect()->route('admin.users.profile');
         }
-        if(is_admin())
+        if(is_admin() || is_subadmin())
         {
             $data['row'] = $user;
             $data['title'] = "Edit ".$this->title." - ".env('APP_NAME', 'Awesome Website');
@@ -193,7 +193,7 @@ class UserController extends Controller
     }
     public function update(Request $request, User $user)
     {
-        if(is_admin() || is_cs())
+        if(is_admin() || is_subadmin() || is_cs())
         {
             $validasi =[
                     'email' => ['required','unique:users,email,'.$user->id.',id'],
@@ -240,7 +240,7 @@ class UserController extends Controller
     }
     public function profile(Request $request)
     {
-        if(is_admin() || is_cs())
+        if(is_admin() || is_subadmin() || is_cs())
         {
             $data['row'] = User::find(Auth::user()->id);
             $data['title'] = "Profile ".Auth::user()->name." - ".env('APP_NAME', 'Awesome Website');
@@ -260,7 +260,7 @@ class UserController extends Controller
             $request->session()->flash('error', 'Admin utama tidak boleh dihapus');
             return redirect()->route('admin.'.$this->uri.'.index');
         }
-        if(is_admin())
+        if(is_admin() || is_subadmin())
         {
             
             $number = $user->roles()->get();
@@ -279,7 +279,7 @@ class UserController extends Controller
     public function deletemass(Request $request)
     {
         
-        if(is_admin())
+        if(is_admin() || is_subadmin())
         {
             $id = explode(",", $request->ids);            
             $Users = User::find($id);

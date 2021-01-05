@@ -20,7 +20,7 @@ class InboxController extends Controller
     }
     public function index()
     {
-        if(is_admin() || is_cs())
+        if(is_admin() || is_subadmin() || is_cs())
         {
             $data['title'] = $this->title." - ".env('APP_NAME', 'Awesome Website');
             $data['pagetitle'] = $this->title;
@@ -31,7 +31,12 @@ class InboxController extends Controller
             }else{
                 $data['lists'] = Inbox::orderBy('code', 'DESC')->paginate(20);
             }
-            $data['users'] = User::orderBy('name', 'ASC')->get();
+            if(is_admin())
+            {
+                $data['users'] = User::orderBy('name', 'ASC')->get();
+            }else{
+                $data['users'] = User::where('owner', Auth::user()->id)->orderBy('name', 'ASC')->get();
+            }
             $data['saldo'] = Setting::where('key', 'saldo')->first();
             $data['lastupdate'] = Setting::where('key', 'lastupdate')->first();
             $data['terminals'] = Terminal::orderBy('name', 'ASC')->get();
@@ -57,7 +62,7 @@ class InboxController extends Controller
     }
     public function search(Request $request)
     {
-        if(is_admin() || is_cs())
+        if(is_admin() || is_subadmin() || is_cs())
         {
             if(!empty($request->get('query')) || !empty($request->get('orderby')) || !empty($request->get('from')) || !empty($request->get('to')) || !empty($request->get('operator')) || !empty($request->get('terminal')))
             {
@@ -126,7 +131,12 @@ class InboxController extends Controller
                         $data['lists'][$key]->terminal = '-';
                     }
                 }
-                $data['users'] = User::orderBy('name', 'ASC')->get();
+                if(is_admin())
+                {
+                    $data['users'] = User::orderBy('name', 'ASC')->get();
+                }else{
+                    $data['users'] = User::where('owner', Auth::user()->id)->orderBy('name', 'ASC')->get();
+                }
                 $data['saldo'] = Setting::where('key', 'saldo')->first();
                 $data['lastupdate'] = Setting::where('key', 'lastupdate')->first();
                 $data['terminals'] = Terminal::orderBy('name', 'ASC')->get();

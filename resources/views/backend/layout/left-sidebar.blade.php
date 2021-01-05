@@ -24,7 +24,7 @@
                         <span> Report </span>
                     </a>
                 </li>
-                @if (is_admin())
+                @if (is_admin() || is_subadmin())
                 <?php
                     $class_show = '';
                     $class_menuitem = '';

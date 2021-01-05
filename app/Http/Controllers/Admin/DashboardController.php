@@ -15,7 +15,7 @@ class DashboardController extends Controller
     }
     public function index()
     {
-        if(is_admin() || is_cs())
+        if(is_admin() || is_subadmin() || is_cs())
         {
             $data['title'] = $this->title." - ".env('APP_NAME', 'Awesome Website');
             $data['pagetitle'] = $this->title;

@@ -41,7 +41,7 @@ class LoginController extends Controller
     }
     public function redirectTo()
     {
-        if(Auth::user()->hasAnyRoles(['Admin', 'CS']))
+        if(Auth::user()->hasAnyRoles(['Admin', 'Subadmin', 'CS']))
         {
             $this->redirectTo = route('admin.home');
         }else{
@@ -64,7 +64,7 @@ class LoginController extends Controller
         $fieldType = filter_var($request->username, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
         if(Auth::attempt(array($fieldType => $input['username'], 'password' => $input['password'])))
         {
-            if(Auth::user()->hasAnyRoles(['Admin', 'CS']))
+            if(Auth::user()->hasAnyRoles(['Admin', 'Subadmin', 'CS']))
             {
                 return redirect()->route('admin.home');
             }

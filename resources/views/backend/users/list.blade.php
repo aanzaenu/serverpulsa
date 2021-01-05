@@ -55,9 +55,6 @@
                                                 <select name="role" class="custom-select">
                                                     <option value="">Semua Group</option>
                                                     @foreach ($roles as $item)
-                                                        @php
-                                                            if($item->id == 3) break;
-                                                        @endphp
                                                         <option value="{{ $item->id }}" {{ $item->id == request()->get('role') ? 'selected' : ''}}>{{ $item->name }}</option>
                                                     @endforeach
                                                 </select>

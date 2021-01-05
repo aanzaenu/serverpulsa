@@ -11,6 +11,17 @@ function is_admin()
     }
     return false;
 }
+function is_subadmin()
+{
+    if(Auth::check())
+    {
+        if(Auth::user()->hasRole('Subadmin'))
+        {
+            return true;
+        }
+    }
+    return false;
+}
 function is_cs()
 {
     if(Auth::check())

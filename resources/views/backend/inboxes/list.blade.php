@@ -25,7 +25,7 @@
                     <div class="d-block w-100 position-relative overflow-hidden">
                         <div class="d-block text-center">
                             <marquee>
-                                <h2> Harap Tindak Tegas Pemain Nakal Yang Ingin Double Claim! Utamakan Cocokin Serial Number ~ Jgn Proses Transaksi Hanya Berdasarkan Waktu Notifikasi Saja ~ </h2>
+                                <h2> Perhatian !! Harap cocokan serial number untuk proses deposit. hati2 member yg claim double deposit</h2>
                             </marquee>
                         </div>
                         <div class="d-block text-center">
@@ -55,7 +55,7 @@
                                                 <input type="text" name="query" class="form-control" placeholder="Cari Sesuatu" value="{{ request()->get('query') }}"/>
                                                 <input type="text" name="from" placeholder="Dari tanggal" class="form-control" data-provide="datepicker" value="{{ request()->get('from') }}">
                                                 <input type="text" name="to" placeholder="Sampai tanggal" class="form-control" data-provide="datepicker" value="{{ request()->get('to') }}">
-                                                @if (is_admin())
+                                                @if (is_admin() || is_subadmin())
                                                     <select name="operator" class="custom-select">
                                                         <option value="">Semua Operator</option>
                                                         @foreach ($users as $user)
@@ -67,7 +67,7 @@
                                                         @foreach ($terminals as $terminal)
                                                             <option value="{{ $terminal->terminal_id }}" {{ request()->get('terminal') == $terminal->terminal_id ? 'selected' : '' }}>{{ $terminal->name }}</option>
                                                         @endforeach
-                                                    </select>                                                    
+                                                    </select>
                                                 @endif
                                                 <div class="input-group-append">
                                                     <button class="btn btn-amdbtn waves-effect waves-light" type="submit">Cari/Filter</button>
@@ -255,7 +255,7 @@
                   <h5 class="modal-title d-block w-100 text-center" id="downloadLabel">Download</h5>
                 </div>
                 <div class="modal-body">
-                    @if (is_admin())                        
+                    @if (is_admin() || is_subadmin())                        
                         <div class="form-group">
                             <label>User</label>
                             <select name="op" class="custom-select">
@@ -317,12 +317,15 @@
                 var image = $(this).data('image');
                 $('select[name="status"]').val(status);
                 $('input[name="id"]').val(id);
-                if(status == 1)
-                {
-                    $('select[name="status"]').attr('disabled', true);
-                }else{
-                    $('select[name="status"]').removeAttr('disabled');
-                }
+                <?php  if(is_cs()){;?>
+                    if(status == 1)
+                    {
+                        $('select[name="status"]').attr('disabled', true);
+                    }else{
+                        $('select[name="status"]').removeAttr('disabled');
+                    }
+                    <?php }
+                ;?>
                 if(!image)
                 {
                     $('.fbukti').removeClass('d-none');
