@@ -270,7 +270,7 @@
                             <select name="terminal" class="custom-select">
                                 <option value="">Semua Terminal</option>
                                 @foreach ($terminals as $terminal)
-                                    <option value="{{ $user->terminal_id }}">{{ $user->terminal }}</option>
+                                    <option value="{{ $terminal->terminal_id }}">{{ $terminal->terminal }}</option>
                                 @endforeach
                             </select>
                         </div>
