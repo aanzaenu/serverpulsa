@@ -26,7 +26,7 @@ class UsersTableSeeder extends Seeder
             'username' => 'cs1',
             'email' => 'cs1@admin.com',
             'password' => Hash::make('admin123'),
-            'terminal' => 2,
+            'terminal' => 39,
         ]);
 
         $admin->roles()->attach(1);

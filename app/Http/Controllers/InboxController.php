@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Inbox;
 use App\Setting;
+use App\Terminal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Image;
@@ -169,6 +170,17 @@ class InboxController extends Controller
     {
         if(!empty($request))
         {
+            $terminal = $request->get('terminal');
+            $modelterminal = Terminal::all();
+            foreach($modelterminal as $key=>$val)
+            {
+                if($val->terminal_id == $terminal)
+                {
+                    $save_terminal = Terminal::where('terminal_id', $terminal)->first();
+                    $save_terminal->saldo = $request->get('saldo');
+                    $save_terminal->save();
+                }
+            }
             $model = Setting::where('key', 'saldo')->first();
             $model->value = intval($request->get('saldo'));
             $model->save();

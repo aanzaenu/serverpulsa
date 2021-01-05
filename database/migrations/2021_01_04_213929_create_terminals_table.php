@@ -17,6 +17,7 @@ class CreateTerminalsTable extends Migration
             $table->id();
             $table->integer('terminal_id')->default(0);
             $table->string('name');
+            $table->integer('saldo')->default(0);
             $table->timestamps();
         });
     }
