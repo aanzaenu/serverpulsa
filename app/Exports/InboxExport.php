@@ -12,11 +12,11 @@ use Maatwebsite\Excel\Concerns\WithColumnWidths;
 
 class InboxExport implements FromCollection, WithHeadings, WithMapping, WithColumnWidths
 {
-    function __construct($op, $from, $to, $terminal) {
+    function __construct($op, $from, $to, $terminals) {
         $this->op = $op;
         $this->from = $from;
         $this->to = $to;
-        $this->terminal = $terminal;
+        $this->terminals = $terminals;
     }
     public function collection()
     {
@@ -25,9 +25,9 @@ class InboxExport implements FromCollection, WithHeadings, WithMapping, WithColu
         {
             $model->where('op', $this->op);
         }
-        if(!empty($this->terminal))
+        if(!empty($this->terminals))
         {
-            $model->where('terminal', $this->terminal);
+            $model->where('terminals', $this->terminals);
         }
         if(!empty($this->from) && !empty($this->to))
         {
@@ -62,10 +62,10 @@ class InboxExport implements FromCollection, WithHeadings, WithMapping, WithColu
             }
             $lists[$key]->created_at = '';
             $lists[$key]->updated_at = '';
-            $lists[$key]->terminal = '-';
-            if(Terminal::where('terminal_id', $val->terminal)->first())
+            $lists[$key]->terminals = '-';
+            if(Terminal::where('terminal_id', $val->terminals)->first())
             {
-                $lists[$key]->terminal = Terminal::where('terminal_id', $val->terminal)->first()->name;
+                $lists[$key]->terminals = Terminal::where('terminal_id', $val->terminals)->first()->name;
             }
             
         }
@@ -80,7 +80,7 @@ class InboxExport implements FromCollection, WithHeadings, WithMapping, WithColu
             $user->message,
             $user->op,
             $user->status,
-            $user->terminal,
+            $user->terminals,
             $user->tanggal,
         ];
     }
