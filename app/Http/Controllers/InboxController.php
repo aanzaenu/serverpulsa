@@ -163,7 +163,7 @@ class InboxController extends Controller
     }
     public function unduh(Request $request)
     {
-        return Excel::download(new InboxExport($request->op, $request->from, $request->to), 'report.xlsx');
+        return Excel::download(new InboxExport($request->op, $request->from, $request->to, $request->terminal), 'report.xlsx');
     }
     public function saldo(Request $request)
     {

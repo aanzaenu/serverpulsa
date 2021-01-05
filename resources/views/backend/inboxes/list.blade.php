@@ -255,15 +255,29 @@
                   <h5 class="modal-title d-block w-100 text-center" id="downloadLabel">Download</h5>
                 </div>
                 <div class="modal-body">
-                    <div class="form-group">
-                        <label>User</label>
-                        <select name="op" class="custom-select">
-                            <option value="">Semua User</option>
-                            @foreach ($users as $user)
-                                <option value="{{ $user->id }}">{{ $user->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
+                    @if (is_admin())                        
+                        <div class="form-group">
+                            <label>User</label>
+                            <select name="op" class="custom-select">
+                                <option value="">Semua User</option>
+                                @foreach ($users as $user)
+                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Terminal</label>
+                            <select name="terminal" class="custom-select">
+                                <option value="">Semua Terminal</option>
+                                @foreach ($terminals as $terminal)
+                                    <option value="{{ $user->terminal_id }}">{{ $user->terminal }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    @else
+                        <input type="hidden" name="op" value="{{ Auth::user()->id }}"/>
+                        <input type="hidden" name="terminal" value="{{ Auth::user()->terminal }}"/>
+                    @endif
                     <div class="form-row">
                         <div class="col">
                             <input type="text" name="from" placeholder="Dari tanggal" class="form-control" data-provide="datepicker" />

@@ -4,6 +4,7 @@ namespace App\Exports;
 
 use App\Inbox;
 use App\User;
+use App\Terminal;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\WithHeadings;
@@ -11,17 +12,22 @@ use Maatwebsite\Excel\Concerns\WithColumnWidths;
 
 class InboxExport implements FromCollection, WithHeadings, WithMapping, WithColumnWidths
 {
-    function __construct($op, $from, $to) {
+    function __construct($op, $from, $to, $terminal) {
         $this->op = $op;
         $this->from = $from;
         $this->to = $to;
+        $this->terminal = $terminal;
     }
     public function collection()
     {
-        $model = Inbox::whereNotNull('code');        
+        $model = Inbox::whereNotNull('code');
         if(!empty($this->op))
         {
             $model->where('op', $this->op);
+        }
+        if(!empty($this->terminal))
+        {
+            $model->where('terminal', $this->terminal);
         }
         if(!empty($this->from) && !empty($this->to))
         {
@@ -56,6 +62,12 @@ class InboxExport implements FromCollection, WithHeadings, WithMapping, WithColu
             }
             $lists[$key]->created_at = '';
             $lists[$key]->updated_at = '';
+            $lists[$key]->terminal = '-';
+            if(Terminal::where('terminal_id', $val->terminal)->first())
+            {
+                $lists[$key]->terminal = Terminal::where('terminal_id', $val->terminal)->first()->name;
+            }
+            
         }
         return $lists;
     }
@@ -68,6 +80,7 @@ class InboxExport implements FromCollection, WithHeadings, WithMapping, WithColu
             $user->message,
             $user->op,
             $user->status,
+            $user->terminal,
             $user->tanggal,
         ];
     }
@@ -81,6 +94,7 @@ class InboxExport implements FromCollection, WithHeadings, WithMapping, WithColu
             'Pesan',
             'Operator',
             'Status',
+            'Terminal',
             'Tanggal'
         ];
     }
@@ -93,6 +107,7 @@ class InboxExport implements FromCollection, WithHeadings, WithMapping, WithColu
             'D' => 80,
             'E' => 20,
             'F' => 20,
+            'G' => 20,
             'G' => 30,
         ];
     }
