@@ -130,7 +130,7 @@ class TerminalController extends Controller
             $request->validate($validasi, $msg);
 
             $terminal->name = trim($request->name);
-            $terminal->terminal_id = trim($request->name);
+            $terminal->terminal_id = trim($request->terminal_id);
     
             if($terminal->save())
             {
