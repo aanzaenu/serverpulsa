@@ -159,6 +159,7 @@ class UserController extends Controller
             $user->email = trim($request->email);
             $user->terminal = trim($request->terminal);
             $user->password = Hash::make($request->input('password'));
+            $user->owner = Auth::user()->id;
     
             if($user->save())
             {
