@@ -60,7 +60,6 @@
                                                     <input type="hidden" name="ids"/>
                                                     <div class="input-group-append">
                                                         <button class="btn btn-amdbtn waves-effect waves-light" type="submit">Eksekusi</button>
-                                                        <a href="{{ route('admin.'.$uri.'.create') }}" class="btn btn-dark waves-effect waves-light">Tambah Data</a>
                                                     </div>
                                                 </div>
                                             </div>
