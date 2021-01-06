@@ -25,19 +25,15 @@ class InboxController extends Controller
             $data['title'] = $this->title." - ".env('APP_NAME', 'Awesome Website');
             $data['pagetitle'] = $this->title;
             $data['uri'] = $this->uri;
-            if(is_cs())
-            {
-                $data['lists'] = Inbox::where('terminal', Auth::user()->terminal)->orderBy('code', 'DESC')->paginate(20);
-                $list_all = Inbox::where('terminal', Auth::user()->terminal)->orderBy('code', 'DESC')->get();
-            }else{
-                $data['lists'] = Inbox::orderBy('code', 'DESC')->paginate(20);
-                $list_all = Inbox::orderBy('code', 'DESC')->get();
-            }
             if(is_admin())
             {
+                $data['lists'] = Inbox::orderBy('code', 'DESC')->paginate(20);
+                $list_all = Inbox::orderBy('code', 'DESC')->get();
                 $data['users'] = User::orderBy('name', 'ASC')->get();
             }else{
                 $data['users'] = User::where('owner', Auth::user()->id)->orderBy('name', 'ASC')->get();
+                $data['lists'] = Inbox::where('terminal', Auth::user()->terminal)->orderBy('code', 'DESC')->paginate(20);
+                $list_all = Inbox::where('terminal', Auth::user()->terminal)->orderBy('code', 'DESC')->get();
             }
             $data['saldo'] = Setting::where('key', 'saldo')->first();
             $data['lastupdate'] = Setting::where('key', 'lastupdate')->first();
@@ -74,11 +70,11 @@ class InboxController extends Controller
         {
             if(!empty($request->get('query')) || !empty($request->get('orderby')) || !empty($request->get('from')) || !empty($request->get('to')) || !empty($request->get('operator')) || !empty($request->get('terminal')))
             {
-                if(is_cs())
+                if(is_admin())
                 {
-                    $model = Inbox::where('terminal', Auth::user()->terminal);
-                }else{
                     $model = Inbox::whereNotNull('code');
+                }else{
+                    $model = Inbox::where('terminal', Auth::user()->terminal);
                 }
                 if(!empty($request->get('query')))
                 {

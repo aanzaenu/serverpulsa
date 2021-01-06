@@ -62,12 +62,14 @@
                                                             <option value="{{ $user->id }}" {{ request()->get('operator') == $user->id ? 'selected' : '' }}>{{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
-                                                    <select name="terminal" class="custom-select">
-                                                        <option value="">Semua Terminal</option>
-                                                        @foreach ($terminals as $terminal)
-                                                            <option value="{{ $terminal->terminal_id }}" {{ request()->get('terminal') == $terminal->terminal_id ? 'selected' : '' }}>{{ $terminal->name }}</option>
-                                                        @endforeach
-                                                    </select>
+                                                    @if (is_admin())
+                                                        <select name="terminal" class="custom-select">
+                                                            <option value="">Semua Terminal</option>
+                                                            @foreach ($terminals as $terminal)
+                                                                <option value="{{ $terminal->terminal_id }}" {{ request()->get('terminal') == $terminal->terminal_id ? 'selected' : '' }}>{{ $terminal->name }}</option>
+                                                            @endforeach
+                                                        </select>                                                        
+                                                    @endif
                                                 @endif
                                                 <div class="input-group-append">
                                                     <button class="btn btn-amdbtn waves-effect waves-light" type="submit">Cari/Filter</button>
