@@ -212,17 +212,21 @@
                                     <td>{{ $list->sender }}</td>
                                     <td>{{ $list->message }}</td>
                                     <td class="text-center">
-                                        @if ($list->status == 1)
-                                            <span class="rounded px-2 badge badge-success" style="white-space: nowrap">
-                                                Done
-                                            </span>
+                                        @if ($list->sender == 'Saldo Akhir')
+                                            -
                                         @else
-                                            <span class="rounded px-2 badge-sm btn-danger" style="white-space: nowrap">
-                                                Belum Diproses
-                                            </span>
+                                            @if ($list->status == 1)
+                                                <span class="rounded px-2 badge badge-success" style="white-space: nowrap">
+                                                    Done
+                                                </span>
+                                            @else
+                                                <span class="rounded px-2 badge-sm btn-danger" style="white-space: nowrap">
+                                                    Belum Diproses
+                                                </span>
+                                            @endif                                            
                                         @endif
                                     </td>
-                                    <td>{{ $list->operator }}</td>
+                                    <td>{{ $list->sender == 'Saldo Akhir' ? '-' : $list->operator }}</td>
                                     <td>{{ $list->terminal }}</td>
                                     <td>{{ $list->tanggal }}</td>
                                     <td>
@@ -231,9 +235,11 @@
                                                 <i class="fe-more-horizontal"></i>
                                             </button>
                                             <div class="dropdown-menu dropdown-menu-right">
-                                                <a href="#" class="dropdown-item upload" data-id="{{ $list->id }}" data-code="{{ $list->code }}" data-status="{{ $list->status }}" data-image="{{ $list->image ? asset_url($list->image) : '' }}">
-                                                    {{ $list->image && $list->status == 1 ? 'Detail' : 'Edit' }}
-                                                </a>
+                                                @if ($list->sender !== 'Saldo Akhir')
+                                                    <a href="#" class="dropdown-item upload" data-id="{{ $list->id }}" data-code="{{ $list->code }}" data-status="{{ $list->status }}" data-image="{{ $list->image ? asset_url($list->image) : '' }}">
+                                                        {{ $list->image && $list->status == 1 ? 'Detail' : 'Edit' }}
+                                                    </a>                                                    
+                                                @endif
                                                 @if (is_admin())
                                                     <div class="dropdown-divider"></div>                                              
                                                     <form action="{{ route('admin.'.$uri.'.destroy', $list->id) }}" method="POST">
