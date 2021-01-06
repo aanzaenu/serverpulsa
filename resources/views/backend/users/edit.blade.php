@@ -53,7 +53,7 @@
                                         </div>
                                     @enderror
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group {{ !is_admin() ? 'd-none' : '' }}">
                                     <label for="role">Group</label>
                                     <select id="role" name="role" class="form-control @if($errors->has('role')) is-invalid @endif"  data-toggle="select2">
                                         <option value="">Semua Group</option>
@@ -67,7 +67,7 @@
                                         </div>
                                     @enderror
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group {{ !is_admin() ? 'd-none' : '' }}">
                                     <label for="terminal">Terminal</label>
                                     <select id="terminal" name="terminal" class="form-control @if($errors->has('terminal')) is-invalid @endif"  data-toggle="select2">
                                         <option value="">Semua Terminal</option>

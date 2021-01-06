@@ -282,7 +282,7 @@ class UserController extends Controller
                 $data['roles'] = Role::orderBy('name', 'ASC')->get();
                 $data['terminals'] = Terminal::orderBy('name', 'ASC')->get();
             }else{
-                $data['roles'] = Role::where('id', 3)->orderBy('name', 'ASC')->get();
+                $data['roles'] = Role::whereIn('id', [2, 3])->orderBy('name', 'ASC')->get();
                 $data['terminals'] = Terminal::where('terminal_id', Auth::user()->terminal)->orderBy('name', 'ASC')->get();
             }
             return view('backend.'.$this->uri.'.edit', $data);
