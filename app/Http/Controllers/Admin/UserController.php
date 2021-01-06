@@ -38,7 +38,7 @@ class UserController extends Controller
                     $query->where('roles.id', 3);
                 })->where('owner', Auth::user()->owner)->orderBy('id', 'DESC')->paginate(20);
                 $data['roles'] = Role::where('id', 3)->orderBy('name', 'ASC')->get();
-                $data['terminals'] = Terminal::where('terminal', Auth::user()->terminal)->orderBy('name', 'ASC')->get();
+                $data['terminals'] = Terminal::where('terminal_id', Auth::user()->terminal)->orderBy('name', 'ASC')->get();
             }
             foreach($data['lists'] as $key=>$val)
             {
@@ -112,7 +112,7 @@ class UserController extends Controller
                     $data['lists'] = $model->paginate(20);
                 }else{
                     $data['roles'] = Role::where('id', 3)->orderBy('name', 'ASC')->get();
-                    $data['terminals'] = Terminal::where('terminal', Auth::user()->terminal)->orderBy('name', 'ASC')->get();
+                    $data['terminals'] = Terminal::where('terminal_id', Auth::user()->terminal)->orderBy('name', 'ASC')->get();
                     $data['lists'] = $model->where('owner', Auth::user()->owner)->paginate(20);
                 }
                 foreach($data['lists'] as $key=>$val)
@@ -145,7 +145,7 @@ class UserController extends Controller
                 $data['terminals'] = Terminal::orderBy('name', 'ASC')->get();
             }else{
                 $data['roles'] = Role::where('id', 3)->orderBy('name', 'ASC')->get();
-                $data['terminals'] = Terminal::where('terminal', Auth::user()->terminal)->orderBy('name', 'ASC')->get();
+                $data['terminals'] = Terminal::where('terminal_id', Auth::user()->terminal)->orderBy('name', 'ASC')->get();
             }
             return view('backend.'.$this->uri.'.create', $data);
         }else{
@@ -216,7 +216,7 @@ class UserController extends Controller
                 $data['terminals'] = Terminal::orderBy('name', 'ASC')->get();
             }else{
                 $data['roles'] = Role::where('id', 3)->orderBy('name', 'ASC')->get();
-                $data['terminals'] = Terminal::where('terminal', Auth::user()->terminal)->orderBy('name', 'ASC')->get();
+                $data['terminals'] = Terminal::where('terminal_id', Auth::user()->terminal)->orderBy('name', 'ASC')->get();
             }
             return view('backend.'.$this->uri.'.edit', $data);
         }else{
@@ -278,8 +278,13 @@ class UserController extends Controller
             $data['title'] = "Profile ".Auth::user()->name." - ".env('APP_NAME', 'Awesome Website');
             $data['pagetitle'] = "Profile ".Auth::user()->name;
             $data['uri'] = $this->uri;
-            $data['roles'] = Role::orderBy('name', 'ASC')->get();
-            $data['terminals'] = Terminal::orderBy('name', 'ASC')->get();
+            if(is_admin()){
+                $data['roles'] = Role::orderBy('name', 'ASC')->get();
+                $data['terminals'] = Terminal::orderBy('name', 'ASC')->get();
+            }else{
+                $data['roles'] = Role::where('id', 3)->orderBy('name', 'ASC')->get();
+                $data['terminals'] = Terminal::where('terminal_id', Auth::user()->terminal)->orderBy('name', 'ASC')->get();
+            }
             return view('backend.'.$this->uri.'.edit', $data);
         }else{
             abort(404);
