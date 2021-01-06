@@ -169,6 +169,7 @@
                                     @if (is_admin() || is_subadmin())
                                         <td>{{ number_format($list->total) }}</td>
                                     @endif
+                                    <td>{{ $list->sender }}</td>
                                     <td>{{ $list->message }}</td>
                                     <td class="text-center">
                                         @if ($list->status == 1)
