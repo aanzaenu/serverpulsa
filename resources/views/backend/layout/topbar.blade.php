@@ -42,7 +42,7 @@
                     <img src="{{asset('assets/images/favicon.png')}}"alt="" height="22">
                 </span>
                 <span class="logo-lg">
-                    <b class="text-white">Server Pulsa</b>
+                    <b class="text-white">{{ env('APP_NAME') }}</b>
                 </span>
             </a>
         </div>    
