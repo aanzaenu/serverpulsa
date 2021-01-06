@@ -82,7 +82,7 @@
         </main>
     </div>
     <footer class="footers text-center py-2">
-        <script>document.write(new Date().getFullYear())</script> &copy; Asset Management Division BTN
+        <script>document.write(new Date().getFullYear())</script> &copy; {{ env('APP_NAME') }}
     </footer>
     <!-- Scripts -->
     <script src="{{asset_url('backend/js/vendor.min.js')}}"></script>
