@@ -242,11 +242,11 @@ class InboxController extends Controller
             abort(404);
         }
     }
-    public function destroy(Request $request, Category $category)
+    public function destroy(Request $request, Inbox $inbox)
     {
-        if(is_admin() || is_cs())
+        if(is_admin())
         {
-            $category->delete();
+            $inbox->delete();
             $request->session()->flash('success', $this->title.' dihapus!');
             return redirect()->route('admin.'.$this->uri.'.index');
         }else{
@@ -255,13 +255,13 @@ class InboxController extends Controller
     }
     public function deletemass(Request $request)
     {        
-        if(is_admin() || is_cs())
+        if(is_admin())
         {
             $ids = explode(",", $request->ids);  
             foreach($ids as $key=> $id)
             {
-                $category = Category::find($id);
-                $category->delete();
+                $inbox = Inbox::find($id);
+                $inbox->delete();
             }
             $request->session()->flash('success', $this->title.' dihapus!');
             return redirect()->route('admin.'.$this->uri.'.index');

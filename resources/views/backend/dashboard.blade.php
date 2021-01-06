@@ -21,6 +21,9 @@
             <div class="col-12">
                 <div class="d-block mx-auto text-center">
                     <h4>Hi, {{ Auth::user()->name }}</h4>
+                    @if (is_admin())
+                        <p class="text-danger">Script tidak akan berjalan apabila Terminal ID tidak sesuai dengan Terminal ID pada aplikasi OTOMAX</p>                        
+                    @endif
                 </div>                
             </div>
         </div>     

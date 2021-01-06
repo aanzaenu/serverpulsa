@@ -45,7 +45,30 @@
                 <div class="card-box">
                     <div class="d-block w-100 mb-1">
                         <div class="row">
-                            <div class="col-12">
+                            @if (is_admin())
+                                <div class="col-lg-4">
+                                    <form class="exe" method="POST" action="{{ route('admin.'.$uri.'.deletemass') }}">
+                                        @csrf
+                                        @method('POST')
+                                        <div class="row">
+                                            <div class="col-xl-8 mb-3">
+                                                <div class="input-group">
+                                                    <select name="pilihexe" class="custom-select">
+                                                        <option value="">Pilih Aksi</option>
+                                                        <option value="1">Hapus Terpilih</option>
+                                                    </select>
+                                                    <input type="hidden" name="ids"/>
+                                                    <div class="input-group-append">
+                                                        <button class="btn btn-amdbtn waves-effect waves-light" type="submit">Eksekusi</button>
+                                                        <a href="{{ route('admin.'.$uri.'.create') }}" class="btn btn-dark waves-effect waves-light">Tambah Data</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>                                
+                            @endif
+                            <div class="col-lg-{{ is_admin() ? '8' : '12' }}">
                                 <form class="" method="GET" action="{{ route('admin.'.$uri.'.search') }}">
                                     <div class="row">
                                         <div class="col-lg-3">
@@ -86,7 +109,15 @@
                     <div class="table-responsive">
                         <table class="table mytable table-hover mb-0">
                             <thead>
-                                <tr>                                   
+                                <tr>
+                                    @if (is_admin())
+                                        <th>
+                                            <div class="checkbox checkbox-amdbtn checkbox-single">
+                                                <input type="checkbox" class="cekall">
+                                                <label></label>
+                                            </div>                                        
+                                        </th>                                        
+                                    @endif
                                     <?php 
                                         $uris = url()->current();
                                         $order_by = request()->get('orderby');
@@ -166,7 +197,15 @@
                             </thead>
                             <tbody>
                                 @foreach($lists as $key=>$list)
-                                <tr class="rows-{{ $list->id }}">                                
+                                <tr class="rows-{{ $list->id }}">
+                                    @if (is_admin())
+                                        <th scope="row">
+                                            <div class="checkbox checkbox-amdbtn checkbox-single">
+                                                <input type="checkbox" name="ceking" data-id="{{ $list->id }}">
+                                                <label></label>
+                                            </div>
+                                        </th>                                        
+                                    @endif
                                     <td>{{ $list->code }}</td>
                                     @if (is_admin() || is_subadmin())
                                         <td>{{ number_format($list->total) }}</td>
@@ -188,9 +227,24 @@
                                     <td>{{ $list->terminal }}</td>
                                     <td>{{ $list->tanggal }}</td>
                                     <td>
-                                        <button type="button" class="btn btn-{{ $list->image && $list->status == 1 ? 'success' : 'primary' }} btn-amdbtn btn-sm upload" data-id="{{ $list->id }}" data-code="{{ $list->code }}" data-status="{{ $list->status }}" data-image="{{ $list->image ? asset_url($list->image) : '' }}">
-                                            {{ $list->image && $list->status == 1 ? 'Detail' : 'Edit' }}
-                                        </button>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-amdbtn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="fe-more-horizontal"></i>
+                                            </button>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <a href="#" class="dropdown-item upload" data-id="{{ $list->id }}" data-code="{{ $list->code }}" data-status="{{ $list->status }}" data-image="{{ $list->image ? asset_url($list->image) : '' }}">
+                                                    {{ $list->image && $list->status == 1 ? 'Detail' : 'Edit' }}
+                                                </a>
+                                                @if (is_admin())
+                                                    <div class="dropdown-divider"></div>                                              
+                                                    <form action="{{ route('admin.'.$uri.'.destroy', $list->id) }}" method="POST">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="dropdown-item text-danger">Delete</button>
+                                                    </form>                                                    
+                                                @endif
+                                            </div>
+                                        </div>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -323,13 +377,51 @@
     <script type="application/javascript">
         $(window).on('load', function(){
             var onModal = false;
+            $('.cekall').change(function(){
+                if($(this).is(':checked', true))
+                {
+                    $('input[name="ceking"]').prop('checked', true);
+                }else{
+                    $('input[name="ceking"]').prop('checked', false);
+                }
+            });
+            $('input[name="ceking"]').change(function(){
+                if($('input[name="ceking"]:checked').length == $('input[name="ceking"]').length)
+                {
+                    $('.cekall').prop('checked', true);
+                }else{
+                    $('.cekall').prop('checked', false);
+                }
+            });
+            $('form.exe').submit(function(e){
+                var hasil = $('select[name="pilihexe"]').val();
+                if(hasil == 1)
+                {
+                    var arr = [];
+                    $('input[name="ceking"]:checked').each(function(){
+                        arr.push($(this).attr('data-id'));
+                    });
+                    if(arr.length > 0)
+                    {
+                        var strarr = arr.join(',');
+                        $('input[name="ids"]').val(strarr);
+                        $(this).submit();
+                    }else{
+                        e.preventDefault();
+                    }
+                }else{
+                    e.preventDefault();
+                }
+            });
+            
             setInterval(function(){
                 if(!onModal)
                 {
                     window.location.reload();
                 }
             }, 60000);
-            $('.upload').on('click', function(){
+            $('.upload').on('click', function(e){
+                e.preventDefault();
                 onModal = true;
                 var id = $(this).data('id');
                 var code = $(this).data('code');

@@ -89,7 +89,7 @@
                                             <input type="checkbox" class="cekall">
                                             <label></label>
                                         </div>                                        
-                                    </th>                                    
+                                    </th>
                                     <?php 
                                         $uris = url()->current();
                                         $order_by = request()->get('orderby');

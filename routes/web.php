@@ -31,8 +31,10 @@ Route::post('/inbox/unduh', 'InboxController@unduh')->name('inbox.unduh');
 Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function(){
     Route::get('/', 'DashboardController@index')->name('home');
 
-    Route::resource('inboxes','InboxController', ['except' => ['show']]);
+    Route::resource('inboxes','InboxController', ['except' => ['show', 'edit', 'store', 'update', 'add']]);
     Route::any('/inboxes/search','InboxController@search')->name('inboxes.search');
+    Route::any('/inboxes/search','InboxController@search')->name('inboxes.search');
+    Route::post('/inboxes/deletemass','InboxController@deletemass')->name('inboxes.deletemass');
     
     Route::resource('users','UserController', ['except' => ['show']]);
     Route::any('/users/search','UserController@search')->name('users.search');
