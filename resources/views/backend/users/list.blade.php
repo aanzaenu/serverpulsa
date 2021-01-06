@@ -120,8 +120,8 @@
                                             $terminal = 'terminal='.request()->get('terminal').'&';
                                         }
                                     ;?>
-                                    <th class="sorting @if($order_by =='name') @if($order == 'asc') sorting_asc @else sorting_desc @endif @endif">
-                                        <a class="text-dark" href="{{ route('admin.'.$uri.'.search').'?'.$kueri.$role.$terminal.'orderby=name&order='.$urut }}">
+                                    <th class="sorting @if($order_by =='username') @if($order == 'asc') sorting_asc @else sorting_desc @endif @endif">
+                                        <a class="text-dark" href="{{ route('admin.'.$uri.'.search').'?'.$kueri.$role.$terminal.'orderby=username&order='.$urut }}">
                                             Username
                                         </a>
                                     </th>
@@ -130,8 +130,8 @@
                                             Nama
                                         </a>
                                     </th>
-                                    <th class="sorting @if($order_by =='code_location') @if($order == 'asc') sorting_asc @else sorting_desc @endif @endif">
-                                        <a class="text-dark" href="{{ route('admin.'.$uri.'.search').'?'.$kueri.$role.$terminal.'orderby=code_location&order='.$urut }}">
+                                    <th class="sorting @if($order_by =='email') @if($order == 'asc') sorting_asc @else sorting_desc @endif @endif">
+                                        <a class="text-dark" href="{{ route('admin.'.$uri.'.search').'?'.$kueri.$role.$terminal.'orderby=email&order='.$urut }}">
                                             Email
                                         </a>
                                     </th>
