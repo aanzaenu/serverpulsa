@@ -130,6 +130,13 @@
                                             Kode
                                         </a>
                                     </th>
+                                    @if (is_admin() || is_subadmin())
+                                        <th class="sorting @if($order_by =='total') @if($order == 'asc') sorting_asc @else sorting_desc @endif @endif">
+                                            <a class="text-dark" href="{{ route('admin.'.$uri.'.search').'?'.$kueri.$from.$to.$operator.$terminal.'orderby=total&order='.$urut }}">
+                                                Total
+                                            </a>
+                                        </th>                                        
+                                    @endif
                                     <th class="sorting @if($order_by =='sender') @if($order == 'asc') sorting_asc @else sorting_desc @endif @endif">
                                         <a class="text-dark" href="{{ route('admin.'.$uri.'.search').'?'.$kueri.$from.$to.$operator.$terminal.'orderby=sender&order='.$urut }}">
                                             Pengirim
@@ -159,7 +166,9 @@
                                 @foreach($lists as $key=>$list)
                                 <tr class="rows-{{ $list->id }}">                                
                                     <td>{{ $list->code }}</td>
-                                    <td>{{ $list->sender }}</td>
+                                    @if (is_admin() || is_subadmin())
+                                        <td>{{ number_format($list->total) }}</td>
+                                    @endif
                                     <td>{{ $list->message }}</td>
                                     <td class="text-center">
                                         @if ($list->status == 1)
@@ -204,7 +213,13 @@
             <div class="col-12">
                 <div class="card-box">
                     <div class="d-block w-100">
-                        <h5>Total : {{ number_format($lists->total()) }} {{ $lists->total() > 1 ? 'Reports' : 'Report' }}</h5>
+                        <h5>Total Report : {{ number_format($lists->total()) }} {{ $lists->total() > 1 ? 'Reports' : 'Report' }}</h5>
+                        <h5>Total Uang : Rp.{{ number_format($total_saldo) }}</h5>
+                        <div class="d-none">
+                            @foreach ($terminals as $item)
+                                name: {{ $item->name }} - {{ $item->saldo }}<br/>
+                            @endforeach
+                        </div>
                     </div>
                 </div>
             </div>

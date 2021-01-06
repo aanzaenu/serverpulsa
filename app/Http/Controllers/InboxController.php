@@ -36,6 +36,13 @@ class InboxController extends Controller
                     //{
                         //if (in_array($request->get('sender'), $pengirim))
                         //{
+                            $total = 0;
+                            if (strpos($request->get('message'), 'Isi ulang Rp') !== false)
+                            {
+                                $pecah = explode('.',$request->get('message'));
+                                $gettotal = str_replace(array('isi', 'ulang', 'rp', 'berhasil', '.', ',', ' ') , '', strtolower($pecah[0]));
+                                $total = intval($gettotal);
+                            }
                             $array = array(
                                 'code' => $request->get('code'),
                                 'sender' => $request->get('sender'),
@@ -44,6 +51,7 @@ class InboxController extends Controller
                                 'message' => $request->get('message'),
                                 'tanggal' => $request->get('tgl'),
                                 'terminal' => $request->get('terminal'),
+                                'total' => $total,
                                 'op' => 0
                             );
                             Inbox::create($array);

@@ -28,8 +28,10 @@ class InboxController extends Controller
             if(is_cs())
             {
                 $data['lists'] = Inbox::where('terminal', Auth::user()->terminal)->orderBy('code', 'DESC')->paginate(20);
+                $list_all = Inbox::where('terminal', Auth::user()->terminal)->orderBy('code', 'DESC')->get();
             }else{
                 $data['lists'] = Inbox::orderBy('code', 'DESC')->paginate(20);
+                $list_all = Inbox::orderBy('code', 'DESC')->get();
             }
             if(is_admin())
             {
@@ -55,6 +57,12 @@ class InboxController extends Controller
                     $data['lists'][$key]->terminal = '-';
                 }
             }
+            $total_saldo = 0;
+            foreach($list_all as $key=>$val)
+            {
+                $total_saldo += $val->total;
+            }
+            $data['total_saldo'] = $total_saldo;
             return view('backend.'.$this->uri.'.list', $data);
         }else{
             abort(404);
@@ -140,6 +148,13 @@ class InboxController extends Controller
                 $data['saldo'] = Setting::where('key', 'saldo')->first();
                 $data['lastupdate'] = Setting::where('key', 'lastupdate')->first();
                 $data['terminals'] = Terminal::orderBy('name', 'ASC')->get();
+
+                $total_saldo = 0;
+                foreach($model->get() as $key=>$val)
+                {
+                    $total_saldo += $val->total;
+                }
+                $data['total_saldo'] = $total_saldo;
                 return view('backend.'.$this->uri.'.list', $data);
             }else{
                 return redirect()->route('admin.'.$this->uri.'.index');

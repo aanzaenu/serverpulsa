@@ -24,6 +24,7 @@ class CreateInboxesTable extends Migration
             $table->longText('message')->nullable();
             $table->datetime('tanggal')->nullable();
             $table->integer('op')->default(0);
+            $table->integer('total')->default(0);
             $table->integer('terminal')->default(0);
             $table->timestamps();
         });
