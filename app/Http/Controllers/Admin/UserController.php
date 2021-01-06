@@ -36,7 +36,7 @@ class UserController extends Controller
             }else{
                 $data['lists'] = User::with('roles')->whereHas('roles', function($query){
                     $query->where('roles.id', 3);
-                })->where('owner', Auth::user()->owner)->orderBy('id', 'DESC')->paginate(20);
+                })->where('owner', Auth::user()->id)->orderBy('id', 'DESC')->paginate(20);
                 $data['roles'] = Role::where('id', 3)->orderBy('name', 'ASC')->get();
                 $data['terminals'] = Terminal::where('terminal_id', Auth::user()->terminal)->orderBy('name', 'ASC')->get();
             }
@@ -113,7 +113,7 @@ class UserController extends Controller
                 }else{
                     $data['roles'] = Role::where('id', 3)->orderBy('name', 'ASC')->get();
                     $data['terminals'] = Terminal::where('terminal_id', Auth::user()->terminal)->orderBy('name', 'ASC')->get();
-                    $data['lists'] = $model->where('owner', Auth::user()->owner)->paginate(20);
+                    $data['lists'] = $model->where('owner', Auth::user()->id)->paginate(20);
                 }
                 foreach($data['lists'] as $key=>$val)
                 {
