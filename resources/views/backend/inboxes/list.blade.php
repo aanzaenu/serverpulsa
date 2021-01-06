@@ -133,7 +133,7 @@
                                     @if (is_admin() || is_subadmin())
                                         <th class="sorting @if($order_by =='total') @if($order == 'asc') sorting_asc @else sorting_desc @endif @endif">
                                             <a class="text-dark" href="{{ route('admin.'.$uri.'.search').'?'.$kueri.$from.$to.$operator.$terminal.'orderby=total&order='.$urut }}">
-                                                Total
+                                                Nominal
                                             </a>
                                         </th>                                        
                                     @endif
