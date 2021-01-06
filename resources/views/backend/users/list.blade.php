@@ -62,9 +62,6 @@
                                                     <select name="terminal" class="custom-select">
                                                         <option value="">Semua Terminal</option>
                                                         @foreach ($terminals as $item)
-                                                            @php
-                                                                if($item->id == 3) break;
-                                                            @endphp
                                                             <option value="{{ $item->id }}" {{ $item->id == request()->get('terminal') ? 'selected' : ''}}>{{ $item->name }}</option>
                                                         @endforeach
                                                     </select>                                                    
