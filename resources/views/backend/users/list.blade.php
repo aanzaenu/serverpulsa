@@ -52,21 +52,23 @@
                                         <div class="col-lg-9 mb-3">
                                             <div class="input-group">
                                                 <input type="text" name="query" class="form-control" placeholder="Cari Sesuatu" value="{{ request()->get('query') }}"/>
-                                                <select name="role" class="custom-select">
-                                                    <option value="">Semua Group</option>
-                                                    @foreach ($roles as $item)
-                                                        <option value="{{ $item->id }}" {{ $item->id == request()->get('role') ? 'selected' : ''}}>{{ $item->name }}</option>
-                                                    @endforeach
-                                                </select>
-                                                <select name="terminal" class="custom-select">
-                                                    <option value="">Semua Terminal</option>
-                                                    @foreach ($terminals as $item)
-                                                        @php
-                                                            if($item->id == 3) break;
-                                                        @endphp
-                                                        <option value="{{ $item->id }}" {{ $item->id == request()->get('terminal') ? 'selected' : ''}}>{{ $item->name }}</option>
-                                                    @endforeach
-                                                </select>
+                                                @if (is_admin())
+                                                    <select name="role" class="custom-select">
+                                                        <option value="">Semua Group</option>
+                                                        @foreach ($roles as $item)
+                                                            <option value="{{ $item->id }}" {{ $item->id == request()->get('role') ? 'selected' : ''}}>{{ $item->name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    <select name="terminal" class="custom-select">
+                                                        <option value="">Semua Terminal</option>
+                                                        @foreach ($terminals as $item)
+                                                            @php
+                                                                if($item->id == 3) break;
+                                                            @endphp
+                                                            <option value="{{ $item->id }}" {{ $item->id == request()->get('terminal') ? 'selected' : ''}}>{{ $item->name }}</option>
+                                                        @endforeach
+                                                    </select>                                                    
+                                                @endif
                                                 <div class="input-group-append">
                                                     <button class="btn btn-amdbtn waves-effect waves-light" type="submit">Cari</button>
                                                 </div>
