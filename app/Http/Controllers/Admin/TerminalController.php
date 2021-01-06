@@ -15,7 +15,7 @@ class TerminalController extends Controller
     }
     public function index()
     {
-        if(is_admin() || is_subadmin())
+        if(is_admin())
         {
             $data['title'] = $this->title." - ".env('APP_NAME', 'Awesome Website');
             $data['pagetitle'] = $this->title;
@@ -28,7 +28,7 @@ class TerminalController extends Controller
     }
     public function search(Request $request)
     {
-        if(is_admin() || is_subadmin())
+        if(is_admin())
         {
             if(!empty($request->get('query')) || !empty($request->get('orderby')))
             {
@@ -66,7 +66,7 @@ class TerminalController extends Controller
     }
     public function create()
     {
-        if(is_admin() || is_subadmin())
+        if(is_admin())
         {
             $data['title'] = "Tambah ".$this->title." - ".env('APP_NAME', 'Awesome Website');
             $data['pagetitle'] = "Tambah ".$this->title;
@@ -78,7 +78,7 @@ class TerminalController extends Controller
     }
     public function store(Request $request, Terminal $terminal)
     {
-        if(is_admin() || is_subadmin())
+        if(is_admin())
         {
             $validasi =[
                     'terminal_id' => ['required', 'unique:terminals'],
@@ -104,7 +104,7 @@ class TerminalController extends Controller
     }
     public function edit(Terminal $terminal)
     {
-        if(is_admin() || is_subadmin())
+        if(is_admin())
         {
             $data['row'] = $terminal;
             $data['title'] = "Edit ".$this->title." - ".env('APP_NAME', 'Awesome Website');
@@ -117,7 +117,7 @@ class TerminalController extends Controller
     }
     public function update(Request $request, Terminal $terminal)
     {
-        if(is_admin() || is_subadmin())
+        if(is_admin())
         {
             $validasi =[
                     'name' => ['required'],
@@ -149,7 +149,7 @@ class TerminalController extends Controller
     }
     public function destroy(Request $request, Terminal $terminal)
     {
-        if(is_admin() || is_subadmin())
+        if(is_admin())
         {
             $terminal->delete();
             $request->session()->flash('success', $this->title.' dihapus!');
@@ -161,7 +161,7 @@ class TerminalController extends Controller
     public function deletemass(Request $request)
     {
         
-        if(is_admin() || is_subadmin())
+        if(is_admin())
         {
             $id = explode(",", $request->ids);            
             $terminals = Terminal::find($id);

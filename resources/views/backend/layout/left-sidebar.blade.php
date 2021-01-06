@@ -19,7 +19,7 @@
                     }
                 ;?>
                 <li class="{{ $class_menuitem }}">
-                    <a href="{{ route('admin.inboxes.index') }}" title="Kantor Cabang">
+                    <a href="{{ route('admin.inboxes.index') }}" title="Report">
                         <i data-feather="list"></i>
                         <span> Report </span>
                     </a>
@@ -35,26 +35,28 @@
                     }
                 ;?>
                 <li class="{{ $class_menuitem }}">
-                    <a href="{{ route('admin.users.index') }}" title="Kantor Cabang">
+                    <a href="{{ route('admin.users.index') }}" title="Users">
                         <i data-feather="users"></i>
                         <span> Users </span>
                     </a>
-                </li>                    
-                <?php
-                    $class_show = '';
-                    $class_menuitem = '';
-                    if($rut->named('admin.terminals.search') || $rut->named('admin.terminals.create') || $rut->named('admin.terminals.edit'))
-                    {
-                        $class_show = 'show';
-                        $class_menuitem = 'menuitem-active';
-                    }
-                ;?>
-                <li class="{{ $class_menuitem }}">
-                    <a href="{{ route('admin.terminals.index') }}" title="Kantor Cabang">
-                        <i data-feather="hard-drive"></i>
-                        <span> Terminals </span>
-                    </a>
-                </li>                    
+                </li>
+                @if (is_admin())
+                    <?php
+                        $class_show = '';
+                        $class_menuitem = '';
+                        if($rut->named('admin.terminals.search') || $rut->named('admin.terminals.create') || $rut->named('admin.terminals.edit'))
+                        {
+                            $class_show = 'show';
+                            $class_menuitem = 'menuitem-active';
+                        }
+                    ;?>
+                    <li class="{{ $class_menuitem }}">
+                        <a href="{{ route('admin.terminals.index') }}" title="Terminal">
+                            <i data-feather="hard-drive"></i>
+                            <span> Terminals </span>
+                        </a>
+                    </li>
+                @endif                  
                 @endif
             </ul>
         </div>
