@@ -46,7 +46,7 @@
                     <div class="d-block w-100 mb-1">
                         <div class="row">
                             @if (is_admin())
-                                <div class="col-lg-4">
+                                <div class="col-lg-3">
                                     <form class="exe" method="POST" action="{{ route('admin.'.$uri.'.deletemass') }}">
                                         @csrf
                                         @method('POST')
@@ -68,7 +68,7 @@
                                     </form>
                                 </div>                                
                             @endif
-                            <div class="col-lg-{{ is_admin() ? '8' : '12' }}">
+                            <div class="col-lg-{{ is_admin() ? '9' : '12' }}">
                                 <form class="" method="GET" action="{{ route('admin.'.$uri.'.search') }}">
                                     <div class="row">
                                         <div class="col-lg-3">
