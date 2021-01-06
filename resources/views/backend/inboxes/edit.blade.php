@@ -27,9 +27,9 @@
                                 @csrf
                                 @method('PUT')
                                 <div class="form-group">
-                                    <label for="name">Nama</label>
-                                    <input type="text" class="form-control @if($errors->has('name')) is-invalid @endif" id="name"  name="name"  placeholder="KCS.Yogyakarta" value="{{ $row->name }}">                                    
-                                    @error('name')
+                                    <label for="total">Total</label>
+                                    <input type="text" class="form-control @if($errors->has('total')) is-invalid @endif" id="name"  name="total"  placeholder="KCS.Yogyakarta" value="{{ $row->total }}">                                    
+                                    @error('total')
                                         <div class="invalid-feedback" role="feedback">
                                             {{ $message }}
                                         </div>
@@ -42,15 +42,6 @@
                                         <option value="1" @if ($row->status == 1) selected @endif>Aktif</option>
                                     </select>
                                     @error('status')
-                                        <div class="invalid-feedback" role="feedback">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                                <div class="form-group">
-                                    <label for="description">Deskripsi</label>
-                                    <textarea class="form-control @if($errors->has('description')) is-invalid @endif" id="description"  name="description"  placeholder="Jl.Cendrawasih No.148, Manukan, Condong Catur, Sleman, Yogyakarta" rows="3">{{ $row->description }}</textarea>
-                                    @error('description')
                                         <div class="invalid-feedback" role="feedback">
                                             {{ $message }}
                                         </div>

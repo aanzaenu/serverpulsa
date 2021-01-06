@@ -202,11 +202,11 @@ class InboxController extends Controller
             abort(404);
         }
     }
-    public function edit(Category $category)
+    public function edit(Inbox $inbox)
     {
-        if(is_admin() || is_cs())
+        if(is_admin())
         {
-            $data['row'] = $category;
+            $data['row'] = $inbox;
             $data['title'] = "Edit ".$this->title." - ".env('APP_NAME', 'Awesome Website');
             $data['pagetitle'] = "Edit ".$this->title;
             $data['uri'] = $this->uri;
@@ -215,25 +215,13 @@ class InboxController extends Controller
             abort(404);
         }
     }
-    public function update(Request $request, Category $category)
+    public function update(Request $request, Inbox $inbox)
     {
-        if(is_admin() || is_cs())
+        if(is_admin())
         {
-            $validasi =[
-                    'name' => ['required','unique:categories,name,'.$category->id.',id'],
-                ];
-            $msg = [
-                'name.required' => 'Nama tidak boleh kosong',
-                'name.unique' => 'Nama sudah terdaftar',
-            ];
-            
-            $request->validate($validasi, $msg);
-            $category->name = trim($request->name);
-            $category->slug = Str::slug(trim($request->name), '-');
-            $category->status = trim($request->status);
-            $category->description = trim($request->description);
+            $inbox->total = trim($request->total);
     
-            if($category->save())
+            if($inbox->save())
             {
                 $request->session()->flash('success', 'Sukses update '.$this->title);
                 return redirect()->route('admin.'.$this->uri.'.index');
