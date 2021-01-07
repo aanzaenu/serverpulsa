@@ -41,7 +41,7 @@ class InboxController extends Controller
             {
                 $data['terminals'] = Terminal::orderBy('name', 'ASC')->get();
             }else{
-                $data['terminals'] = Terminal::where('id', Auth::user()->terminal)->orderBy('name', 'ASC')->get();
+                $data['terminals'] = Terminal::where('terminal_id', Auth::user()->terminal)->orderBy('name', 'ASC')->get();
             }
             foreach($data['lists'] as $key=> $val)
             {
@@ -160,7 +160,7 @@ class InboxController extends Controller
                 {
                     $data['terminals'] = Terminal::orderBy('name', 'ASC')->get();
                 }else{
-                    $data['terminals'] = Terminal::where('id', Auth::user()->terminal)->orderBy('name', 'ASC')->get();
+                    $data['terminals'] = Terminal::where('terminal_id', Auth::user()->terminal)->orderBy('name', 'ASC')->get();
                 }
 
                 return view('backend.'.$this->uri.'.list', $data);
