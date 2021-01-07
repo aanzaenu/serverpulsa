@@ -28,15 +28,43 @@
                                 <h2> Perhatian !! Harap cocokan serial number untuk proses deposit. hati2 member yg claim double deposit</h2>
                             </marquee>
                         </div>
-                        <div class="d-block text-center">
-                            <h4>Pulsa Sekarang: Rp.{{ number_format($saldo->value) }}</h4>
-                        </div>
-                        <div class="d-block text-center">
-                            @php
-                                $last = strtotime($lastupdate->value);
-                                $lastupdates = date('d M Y h:i', $last);
-                            @endphp
-                            <h6>Last Update: {{ $lastupdates }}</h6>
+                        <div class="d-block">
+                            <div class="table-responsive">
+                                <table class="table mytable table-hover mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Terminal</th>
+                                            <th>Saldo Akhir</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @php
+                                            $total_saldo = 0;
+                                        @endphp
+                                        @foreach ($terminals as $item)
+                                            @php
+                                                $total_saldo += $item->saldo;
+                                            @endphp
+                                            <tr>
+                                                <td>{{ $item->terminal_id }}</td>
+                                                <td>{{ $item->name }}</td>
+                                                <td>Rp.{{ number_format($item->saldo) }}</td>
+                                            </tr>
+                                        @endforeach
+                                            <tr>
+                                                <td colspan="2">
+                                                    @php
+                                                        $last = strtotime($lastupdate->value);
+                                                        $lastupdates = date('d M Y h:i', $last);
+                                                    @endphp
+                                                    Last Update: {{ $lastupdates }}
+                                                </td>
+                                                <td>Rp.{{ number_format($total_saldo) }}</td>
+                                            </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -279,11 +307,6 @@
                         @if (is_admin() || is_subadmin())
                             <h5>Total Uang : Rp.{{ number_format($total_saldo) }}</h5>                            
                         @endif
-                        <div class="d-none">
-                            @foreach ($terminals as $item)
-                                name: {{ $item->name }} - {{ $item->saldo }}<br/>
-                            @endforeach
-                        </div>
                     </div>
                 </div>
             </div>

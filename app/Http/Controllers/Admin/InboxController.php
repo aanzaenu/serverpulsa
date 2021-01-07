@@ -37,7 +37,12 @@ class InboxController extends Controller
             }
             $data['saldo'] = Setting::where('key', 'saldo')->first();
             $data['lastupdate'] = Setting::where('key', 'lastupdate')->first();
-            $data['terminals'] = Terminal::orderBy('name', 'ASC')->get();
+            if(is_admin())
+            {
+                $data['terminals'] = Terminal::orderBy('name', 'ASC')->get();
+            }else{
+                $data['terminals'] = Terminal::where('id', Auth::user()->terminal)->orderBy('name', 'ASC')->get();
+            }
             foreach($data['lists'] as $key=> $val)
             {
                 $data['lists'][$key]->operator = '-';
@@ -151,7 +156,12 @@ class InboxController extends Controller
                 }
                 $data['saldo'] = Setting::where('key', 'saldo')->first();
                 $data['lastupdate'] = Setting::where('key', 'lastupdate')->first();
-                $data['terminals'] = Terminal::orderBy('name', 'ASC')->get();
+                if(is_admin())
+                {
+                    $data['terminals'] = Terminal::orderBy('name', 'ASC')->get();
+                }else{
+                    $data['terminals'] = Terminal::where('id', Auth::user()->terminal)->orderBy('name', 'ASC')->get();
+                }
 
                 return view('backend.'.$this->uri.'.list', $data);
             }else{
