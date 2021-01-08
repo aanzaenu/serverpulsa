@@ -28,7 +28,7 @@
                                 @method('PUT')
                                 <div class="form-group">
                                     <label for="total">Total</label>
-                                    <input type="text" class="form-control @if($errors->has('total')) is-invalid @endif" id="name"  name="total"  placeholder="KCS.Yogyakarta" value="{{ $row->total }}">                                    
+                                    <input type="text" class="form-control @if($errors->has('total')) is-invalid @endif" id="total"  name="total"  placeholder="5000" value="{{ $row->total }}">                                    
                                     @error('total')
                                         <div class="invalid-feedback" role="feedback">
                                             {{ $message }}
@@ -38,10 +38,18 @@
                                 <div class="form-group">
                                     <label for="status">Status</label>
                                     <select id="statuss" name="status" class="form-control @if($errors->has('status')) is-invalid @endif"  data-toggle="select2">
-                                        <option value="0">Non Aktif</option>
-                                        <option value="1" @if ($row->status == 1) selected @endif>Aktif</option>
+                                        <option value="0" @if ($row->status == 0) selected @endif>Belum diproses</option>
+                                        <option value="1" @if ($row->status == 1) selected @endif>Done</option>
                                     </select>
                                     @error('status')
+                                        <div class="invalid-feedback" role="feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div><div class="form-group">
+                                    <label for="op">OP</label>
+                                    <input type="text" class="form-control @if($errors->has('op')) is-invalid @endif" id="op"  name="op"  placeholder="0" value="{{ $row->op }}">                                    
+                                    @error('op')
                                         <div class="invalid-feedback" role="feedback">
                                             {{ $message }}
                                         </div>

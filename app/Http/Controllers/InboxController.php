@@ -108,7 +108,10 @@ class InboxController extends Controller
     {
         $model = Inbox::find($request->id);
         $model->status = $request->get('status');
-        $model->op = Auth::user()->id;
+        if($request->get('status') == 1)
+        {
+            $model->op = Auth::user()->id;
+        }
         if($request->file('file'))
         {
             $validasi = Validator::make($request->all(), [

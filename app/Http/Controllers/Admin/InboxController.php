@@ -230,6 +230,8 @@ class InboxController extends Controller
         if(is_admin())
         {
             $inbox->total = trim($request->total);
+            $inbox->status = trim($request->status);
+            $inbox->op = trim($request->op);
     
             if($inbox->save())
             {
