@@ -110,6 +110,12 @@ class InboxController extends Controller
                     $model->where('terminal', $request->get('terminal'));
                 }
                 
+                $total_saldo = 0;
+                foreach($model->where('total', '>', 0)->get() as $key=>$val)
+                {
+                    $total_saldo += $val->total;
+                }
+                $data['total_saldo'] = $total_saldo;
                 
                 if($request->get('orderby'))
                 {
@@ -142,12 +148,6 @@ class InboxController extends Controller
                         $data['lists'][$key]->terminal = '-';
                     }
                 }
-                $total_saldo = 0;
-                foreach($model->where('total', '>', 0)->get() as $key=>$val)
-                {
-                    $total_saldo += $val->total;
-                }
-                $data['total_saldo'] = 0;
                 if(is_admin())
                 {
                     $data['users'] = User::orderBy('name', 'ASC')->get();

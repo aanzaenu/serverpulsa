@@ -40,11 +40,11 @@
                                     </thead>
                                     <tbody>
                                         @php
-                                            $total_saldo = 0;
+                                            $total_saldo_terminal = 0;
                                         @endphp
                                         @foreach ($terminals as $item)
                                             @php
-                                                $total_saldo += $item->saldo;
+                                                $total_saldo_terminal += $item->saldo;
                                             @endphp
                                             <tr>
                                                 <td>{{ $item->terminal_id }}</td>
@@ -60,7 +60,7 @@
                                                     @endphp
                                                     Last Update: {{ $lastupdates }}
                                                 </td>
-                                                <td>Rp.{{ number_format($total_saldo) }}</td>
+                                                <td>Rp.{{ number_format($total_saldo_terminal) }}</td>
                                             </tr>
                                     </tbody>
                                 </table>
