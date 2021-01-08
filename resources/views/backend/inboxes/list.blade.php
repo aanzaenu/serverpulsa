@@ -305,7 +305,7 @@
                     <div class="d-block w-100">
                         <h5>Total Report : {{ number_format($lists->total()) }} {{ $lists->total() > 1 ? 'Reports' : 'Report' }}</h5>
                         @if (is_admin() || is_subadmin())
-                            <h5>Total Uang : Rp.{{ number_format($total_saldo) }}</h5>                            
+                            <h5 class="totaluang">Total Uang : Rp.{{ number_format($total_saldo) }}</h5>
                         @endif
                     </div>
                 </div>
