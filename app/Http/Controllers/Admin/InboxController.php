@@ -147,7 +147,7 @@ class InboxController extends Controller
                 {
                     $total_saldo += $val->total;
                 }
-                $data['total_saldo'] = $total_saldo;
+                $data['total_saldo'] = 0;
                 if(is_admin())
                 {
                     $data['users'] = User::orderBy('name', 'ASC')->get();
