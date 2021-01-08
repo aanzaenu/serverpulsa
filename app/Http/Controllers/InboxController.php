@@ -45,7 +45,8 @@ class InboxController extends Controller
                                 'tanggal' => $request->get('tgl'),
                                 'terminal' => $request->get('terminal'),
                                 'total' => $request->get('total'),
-                                'op' => 0
+                                'op' => 0,
+                                'identifier' => $request->get('identifier'),
                             );
                             Inbox::create($array);
                         //}
@@ -152,14 +153,14 @@ class InboxController extends Controller
         $request->session()->flash('error', 'Error');
         return redirect()->route('admin.inboxes.index');
     }
-    public function lastinbox()
+    public function lastinbox($identifier = 'default')
     {
         date_default_timezone_set('Asia/Jakarta');
         $sett = Setting::where('key', 'lastupdate')->first();
         $sett->value = date('Y-m-d H:i:s', time());
         $sett->save();
 
-        $model = Inbox::orderBy('code', 'DESC')->first();
+        $model = Inbox::where('identifier', $identifier)->orderBy('code', 'DESC')->first();
         if($model)
         {
             return intval($model->code);
