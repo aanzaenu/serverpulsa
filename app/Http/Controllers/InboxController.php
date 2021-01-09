@@ -203,7 +203,7 @@ class InboxController extends Controller
         $model = Inbox::where('identifier', $identifier)->orderBy('code', 'DESC')->paginate(20);
         if($model)
         {
-            return $mode;
+            return $model;
         }
         return 0;
     }
