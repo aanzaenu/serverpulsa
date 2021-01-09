@@ -93,7 +93,7 @@
                                             </div>
                                         </div>
                                     </form>
-                                </div>                                
+                                </div>
                             @endif
                             <div class="col-lg-{{ is_admin() ? '9' : '12' }}">
                                 <form class="" method="GET" action="{{ route('admin.'.$uri.'.search') }}">
@@ -108,6 +108,9 @@
                                                 @if (is_admin() || is_subadmin())
                                                     <select name="operator" class="custom-select">
                                                         <option value="">Semua Operator</option>
+                                                        @if (is_subadmin())
+                                                            <option value="{{ Auth::user()->id }}" {{ request()->get('operator') == Auth::user()->id ? 'selected' : ''}}>{{ Auth::user()->name }}</option>
+                                                        @endif
                                                         @foreach ($users as $user)
                                                             <option value="{{ $user->id }}" {{ request()->get('operator') == $user->id ? 'selected' : '' }}>{{ $user->name }}</option>
                                                         @endforeach

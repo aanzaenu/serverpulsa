@@ -31,7 +31,7 @@ class InboxController extends Controller
                 $list_all = Inbox::where('total', '>', 0)->orderBy('id', 'DESC')->get();
                 $data['users'] = User::orderBy('name', 'ASC')->get();
             }else{
-                $data['users'] = User::where('id', Auth::user()->id)->where('owner', Auth::user()->id)->orderBy('name', 'ASC')->get();
+                $data['users'] = User::where('owner', Auth::user()->id)->orderBy('name', 'ASC')->get();
                 $data['lists'] = Inbox::where('terminal', Auth::user()->terminal)->orderBy('id', 'DESC')->paginate(20);
                 $list_all = Inbox::where('total', '>', 0)->where('terminal', Auth::user()->terminal)->orderBy('id', 'DESC')->get();
             }
@@ -159,7 +159,7 @@ class InboxController extends Controller
                 {
                     $data['users'] = User::orderBy('name', 'ASC')->get();
                 }else{
-                    $data['users'] = User::where('id', Auth::user()->id)->where('owner', Auth::user()->id)->orderBy('name', 'ASC')->get();
+                    $data['users'] = User::where('owner', Auth::user()->id)->orderBy('name', 'ASC')->get();
                 }
                 $data['saldo'] = Setting::where('key', 'saldo')->first();
                 $data['lastupdate'] = Setting::where('key', 'lastupdate')->first();
