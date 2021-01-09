@@ -21,3 +21,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('/inbox', 'InboxController@inbox')->name('inbox.post');
 Route::get('/inbox/lastinbox/{identifier}', 'InboxController@lastinbox')->name('inbox.lastinbox');
 Route::post('/inbox/saldo', 'InboxController@saldo')->name('inbox.saldo');
+Route::get('/inbox/ceklist/{identifier}', 'InboxController@ceklist')->name('inbox.ceklist');

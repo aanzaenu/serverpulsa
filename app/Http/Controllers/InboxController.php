@@ -198,4 +198,13 @@ class InboxController extends Controller
             'status' => 'gagal'
         ], 200);
     }
+    public function ceklist($identifier = 'default')
+    {
+        $model = Inbox::where('identifier', $identifier)->orderBy('code', 'DESC')->paginate(20);
+        if($model)
+        {
+            return $mode;
+        }
+        return 0;
+    }
 }
