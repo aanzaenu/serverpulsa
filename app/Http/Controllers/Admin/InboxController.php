@@ -77,7 +77,7 @@ class InboxController extends Controller
             {
                 if(is_admin())
                 {
-                    $model = Inbox::whereNotNull('code');
+                    $model = Inbox::where('id', '>', 0);
                 }else{
                     $model = Inbox::where('terminal', Auth::user()->terminal);
                 }
