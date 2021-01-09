@@ -27,13 +27,13 @@ class InboxController extends Controller
             $data['uri'] = $this->uri;
             if(is_admin())
             {
-                $data['lists'] = Inbox::orderBy('code', 'DESC')->paginate(20);
-                $list_all = Inbox::where('total', '>', 0)->orderBy('code', 'DESC')->get();
+                $data['lists'] = Inbox::orderBy('id', 'DESC')->paginate(20);
+                $list_all = Inbox::where('total', '>', 0)->orderBy('id', 'DESC')->get();
                 $data['users'] = User::orderBy('name', 'ASC')->get();
             }else{
                 $data['users'] = User::where('owner', Auth::user()->id)->orderBy('name', 'ASC')->get();
-                $data['lists'] = Inbox::where('terminal', Auth::user()->terminal)->orderBy('code', 'DESC')->paginate(20);
-                $list_all = Inbox::where('total', '>', 0)->where('terminal', Auth::user()->terminal)->orderBy('code', 'DESC')->get();
+                $data['lists'] = Inbox::where('terminal', Auth::user()->terminal)->orderBy('id', 'DESC')->paginate(20);
+                $list_all = Inbox::where('total', '>', 0)->where('terminal', Auth::user()->terminal)->orderBy('id', 'DESC')->get();
             }
             $data['saldo'] = Setting::where('key', 'saldo')->first();
             $data['lastupdate'] = Setting::where('key', 'lastupdate')->first();
@@ -132,8 +132,8 @@ class InboxController extends Controller
                         $list_all->orderBy($request->get('orderby'), 'DESC');
                     }
                 }else{
-                    $model->orderBy('code', 'DESC');
-                    $list_all->orderBy('code', 'DESC');
+                    $model->orderBy('id', 'DESC');
+                    $list_all->orderBy('id', 'DESC');
                 }
 
                 $data['title'] = "Pencarian ".$this->title." - ".env('APP_NAME', 'Awesome Website');
