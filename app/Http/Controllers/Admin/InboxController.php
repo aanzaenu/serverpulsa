@@ -78,12 +78,19 @@ class InboxController extends Controller
                 if(is_admin())
                 {
                     $model = Inbox::where('id', '>', 0);
+                    $list_all = Inbox::where('id', '>', 0);
                 }else{
                     $model = Inbox::where('terminal', Auth::user()->terminal);
+                    $list_all = Inbox::where('terminal', Auth::user()->terminal);
                 }
                 if(!empty($request->get('query')))
                 {
                     $model->where(function($query) use ($request){
+                        return $query->where('code', 'like', '%'.strip_tags($request->get('query')).'%')
+                                    ->orWhere('sender', 'like', '%'.strip_tags($request->get('query')).'%')
+                                    ->orWhere('message', 'like', '%'.strip_tags($request->get('query')).'%');
+                    });
+                    $list_all->where(function($query) use ($request){
                         return $query->where('code', 'like', '%'.strip_tags($request->get('query')).'%')
                                     ->orWhere('sender', 'like', '%'.strip_tags($request->get('query')).'%')
                                     ->orWhere('message', 'like', '%'.strip_tags($request->get('query')).'%');
@@ -100,33 +107,33 @@ class InboxController extends Controller
 
                     $model->where('tanggal', '>=', $sfrom);
                     $model->where('tanggal', '<=', $sto);
+                    $list_all->where('tanggal', '>=', $sfrom);
+                    $list_all->where('tanggal', '<=', $sto);
                 }
                 if(!empty($request->get('operator')))
                 {
                     $model->where('op', $request->get('operator'));
+                    $list_all->where('op', $request->get('operator'));
                 }
                 if(!empty($request->get('terminal')))
                 {
                     $model->where('terminal', $request->get('terminal'));
+                    $list_all->where('terminal', $request->get('terminal'));
                 }
-                
-                $total_saldo = 0;
-                foreach($model->where('total', '>', 0)->get() as $key=>$val)
-                {
-                    $total_saldo += $val->total;
-                }
-                $data['total_saldo'] = $total_saldo;
                 
                 if($request->get('orderby'))
                 {
                     if($request->get('order') == 'asc')
                     {
                         $model->orderBy($request->get('orderby'), 'ASC');
+                        $list_all->orderBy($request->get('orderby'), 'ASC');
                     }else{
                         $model->orderBy($request->get('orderby'), 'DESC');
+                        $list_all->orderBy($request->get('orderby'), 'DESC');
                     }
                 }else{
                     $model->orderBy('code', 'DESC');
+                    $list_all->orderBy('code', 'DESC');
                 }
 
                 $data['title'] = "Pencarian ".$this->title." - ".env('APP_NAME', 'Awesome Website');
@@ -162,6 +169,13 @@ class InboxController extends Controller
                 }else{
                     $data['terminals'] = Terminal::where('terminal_id', Auth::user()->terminal)->orderBy('name', 'ASC')->get();
                 }
+                
+                $total_saldo = 0;
+                foreach($list_all->where('total', '>', 0)->get() as $key=>$val)
+                {
+                    $total_saldo += $val->total;
+                }
+                $data['total_saldo'] = $total_saldo;
 
                 return view('backend.'.$this->uri.'.list', $data);
             }else{
