@@ -22,13 +22,13 @@ class InboxController extends Controller
         if(!empty($request))
         {
             $pengirim = $request->get('pengirim');
-            $latest = Inbox::orderby('code', 'DESC')->first();
+            $latest = Inbox::where('identifier', $request->get('identifier'))->orderby('code', 'DESC')->first();
             $lastid = 0;
             if($latest)
             {
                 $lastid = $latest->code;
             }
-            $cek = Inbox::where('code', $request->get('code'))->first();
+            $cek = Inbox::where('identifier', $request->get('identifier'))->where('code', $request->get('code'))->first();
             if(!$cek){
                 if(intval($request->get('code')) > $lastid)
                 {
