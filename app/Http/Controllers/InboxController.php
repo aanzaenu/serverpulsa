@@ -207,4 +207,14 @@ class InboxController extends Controller
         }
         return 0;
     }
+    public function forcedelete($id)
+    {
+        $model = Inbox::find($id);
+        if($model)
+        {
+            $model->delete();
+            return response()->json([ 'status' => 'oke'], 200);
+        }
+        return response()->json([ 'status' => 'error'], 200);
+    }
 }
