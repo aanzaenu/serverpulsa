@@ -84,13 +84,12 @@ class TerminalController extends Controller
             $validasi =[
                     'terminal_id' => ['required'],
                     'name' => ['required'],
-                    'pcid' => ['required', 'unique:terminals'],
+                    'pcid' => ['required'],
                 ];
             $msg = [
                 'terminal_id.required' => 'Terminal ID tidak boleh kosong',
                 'name.required' => 'Nama tidak boleh kosong',
                 'pcid.required' => 'PC ID tidak boleh kosong',
-                'pcid.unique' => 'PC ID Sudah Ada',
             ];
             $terminal->terminal_id = trim($request->terminal_id);
             $terminal->name = trim($request->name);
@@ -127,13 +126,12 @@ class TerminalController extends Controller
             $validasi =[
                     'name' => ['required'],
                     'terminal_id' => ['required'],
-                    'pcid' => ['required', 'unique:terminals,pcid,'.$terminal->pcid.',id'],
+                    'pcid' => ['required'],
                 ];
             $msg = [
                 'name.required' => 'Nama tidak boleh kosong',
                 'terminal_id.required' => 'Terminal ID tidak boleh kosong',
                 'pcid.required' => 'PC ID tidak boleh kosong',
-                'pcid.unique' => 'PC ID Sudah Ada',
             ];
             $request->validate($validasi, $msg);
 
