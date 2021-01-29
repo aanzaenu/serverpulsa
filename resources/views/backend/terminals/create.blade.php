@@ -37,6 +37,15 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
+                                    <label for="pcid">PC ID</label>
+                                    <input type="text" class="form-control @if($errors->has('pcid')) is-invalid @endif" id="pcid"  name="pcid"  placeholder="pc1" value="{{ old('pcid') }}">                                    
+                                    @error('pcid')
+                                        <div class="invalid-feedback" role="feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
                                     <label for="name">Nama</label>
                                     <input type="text" class="form-control @if($errors->has('name')) is-invalid @endif" id="name"  name="name"  placeholder="#1 Dongle" value="{{ old('name') }}">                                    
                                     @error('name')

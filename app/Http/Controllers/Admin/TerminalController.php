@@ -37,6 +37,7 @@ class TerminalController extends Controller
                 {
                     $model->where(function($query) use ($request){
                         return $query->where('name', 'like', '%'.strip_tags($request->get('query')).'%')
+                                ->orWhere('pcid', 'like', '%'.strip_tags($request->get('query')).'%')
                                 ->orWhere('terminal_id', 'like', '%'.strip_tags($request->get('query')).'%');
                     });
                 }
@@ -81,15 +82,19 @@ class TerminalController extends Controller
         if(is_admin())
         {
             $validasi =[
-                    'terminal_id' => ['required', 'unique:terminals'],
+                    'terminal_id' => ['required'],
                     'name' => ['required'],
+                    'pcid' => ['required', 'unique:terminals'],
                 ];
             $msg = [
                 'terminal_id.required' => 'Terminal ID tidak boleh kosong',
                 'name.required' => 'Nama tidak boleh kosong',
+                'pcid.required' => 'PC ID tidak boleh kosong',
+                'pcid.unique' => 'PC ID Sudah Ada',
             ];
             $terminal->terminal_id = trim($request->terminal_id);
             $terminal->name = trim($request->name);
+            $terminal->pcid = strtolower(trim($request->pcid));
             $request->validate($validasi, $msg);
             if($terminal->save())
             {
@@ -121,15 +126,19 @@ class TerminalController extends Controller
         {
             $validasi =[
                     'name' => ['required'],
-                    'terminal_id' => ['required', 'unique:terminals,terminal_id,'.$terminal->id.',id'],
+                    'terminal_id' => ['required'],
+                    'pcid' => ['required', 'unique:terminals,pcid,'.$terminal->pcid.',id'],
                 ];
             $msg = [
                 'name.required' => 'Nama tidak boleh kosong',
                 'terminal_id.required' => 'Terminal ID tidak boleh kosong',
+                'pcid.required' => 'PC ID tidak boleh kosong',
+                'pcid.unique' => 'PC ID Sudah Ada',
             ];
             $request->validate($validasi, $msg);
 
             $terminal->name = trim($request->name);
+            $terminal->pcid = strtolower(trim($request->pcid));
             $terminal->terminal_id = trim($request->terminal_id);
     
             if($terminal->save())

@@ -98,6 +98,11 @@
                                             Terminal ID
                                         </a>
                                     </th>
+                                    <th class="sorting @if($order_by =='pcid') @if($order == 'asc') sorting_asc @else sorting_desc @endif @endif">
+                                        <a class="text-dark" href="{{ route('admin.'.$uri.'.search').'?'.$kueri.'orderby=pcid&order='.$urut }}">
+                                            PC ID
+                                        </a>
+                                    </th>
                                     <th class="sorting @if($order_by =='name') @if($order == 'asc') sorting_asc @else sorting_desc @endif @endif">
                                         <a class="text-dark" href="{{ route('admin.'.$uri.'.search').'?'.$kueri.'orderby=name&order='.$urut }}">
                                             Nama
@@ -116,6 +121,7 @@
                                         </div>
                                     </th>
                                     <td>{{ $list->terminal_id }}</td>
+                                    <td>{{ $list->pcid }}</td>
                                     <td>{{ $list->name }}</td>
                                     <td>
                                         <div class="btn-group">
