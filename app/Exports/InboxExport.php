@@ -109,7 +109,7 @@ class InboxExport implements FromCollection, WithHeadings, WithMapping, WithColu
             'E' => 20,
             'F' => 20,
             'G' => 20,
-            'G' => 30,
+            'H' => 30,
         ];
     }
 }
