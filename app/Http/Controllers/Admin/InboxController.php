@@ -41,7 +41,7 @@ class InboxController extends Controller
             {
                 $data['terminals'] = Terminal::orderBy('name', 'ASC')->get();
             }else{
-                $data['terminals'] = Terminal::where('id', Auth::user()->terminal)->orderBy('name', 'ASC')->get();
+                $data['terminals'] = Terminal::where('terminal_id', Auth::user()->terminal)->orderBy('name', 'ASC')->get();
             }
             foreach($data['lists'] as $key=> $val)
             {
@@ -50,7 +50,7 @@ class InboxController extends Controller
                 {
                     $data['lists'][$key]->operator = User::find($val->op)->name;
                 }
-                $terminal = Terminal::where('id', $val->terminal)->first();
+                $terminal = Terminal::where('terminal_id', $val->terminal)->first();
                 if($terminal)
                 {
                     $data['lists'][$key]->terminal = $terminal->name;
@@ -147,7 +147,7 @@ class InboxController extends Controller
                     {
                         $data['lists'][$key]->operator = User::find($val->op)->name;
                     }
-                    $terminal = Terminal::where('id', $val->terminal)->first();
+                    $terminal = Terminal::where('terminal_id', $val->terminal)->first();
                     if($terminal)
                     {
                         $data['lists'][$key]->terminal = $terminal->name;
@@ -167,7 +167,7 @@ class InboxController extends Controller
                 {
                     $data['terminals'] = Terminal::orderBy('name', 'ASC')->get();
                 }else{
-                    $data['terminals'] = Terminal::where('id', Auth::user()->terminal)->orderBy('name', 'ASC')->get();
+                    $data['terminals'] = Terminal::where('terminal_id', Auth::user()->terminal)->orderBy('name', 'ASC')->get();
                 }
                 
                 $total_saldo = 0;

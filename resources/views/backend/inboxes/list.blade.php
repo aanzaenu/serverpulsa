@@ -35,7 +35,6 @@
                                         <tr>
                                             <th>ID</th>
                                             <th>Terminal</th>
-                                            <th>PC</th>
                                             <th>Saldo Akhir</th>
                                         </tr>
                                     </thead>
@@ -49,7 +48,6 @@
                                             @endphp
                                             <tr>
                                                 <td>{{ $item->terminal_id }}</td>
-                                                <td>{{ $item->pcid }}</td>
                                                 <td>{{ $item->name }}</td>
                                                 <td>Rp.{{ number_format($item->saldo) }}</td>
                                             </tr>
@@ -121,7 +119,7 @@
                                                         <select name="terminal" class="custom-select">
                                                             <option value="">Semua Terminal</option>
                                                             @foreach ($terminals as $terminal)
-                                                                <option value="{{ $terminal->id }}" {{ request()->get('terminal') == $terminal->id ? 'selected' : '' }}>{{ $terminal->name }}</option>
+                                                                <option value="{{ $terminal->terminal_id }}" {{ request()->get('terminal') == $terminal->terminal_id ? 'selected' : '' }}>{{ $terminal->name }}</option>
                                                             @endforeach
                                                         </select>                                                        
                                                     @endif
@@ -377,7 +375,7 @@
                             <select name="terminal" class="custom-select">
                                 <option value="">Semua Terminal</option>
                                 @foreach ($terminals as $terminal)
-                                    <option value="{{ $terminal->id }}">{{ $terminal->name }}</option>
+                                    <option value="{{ $terminal->terminal_id }}">{{ $terminal->name }}</option>
                                 @endforeach
                             </select>
                         </div>
