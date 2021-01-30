@@ -38,11 +38,11 @@ class UserController extends Controller
                     $query->where('roles.id', 3);
                 })->where('owner', Auth::user()->id)->orderBy('id', 'DESC')->paginate(20);
                 $data['roles'] = Role::where('id', 3)->orderBy('name', 'ASC')->get();
-                $data['terminals'] = Terminal::where('terminal_id', Auth::user()->terminal)->orderBy('name', 'ASC')->get();
+                $data['terminals'] = Terminal::where('id', Auth::user()->tid)->orderBy('name', 'ASC')->get();
             }
             foreach($data['lists'] as $key=>$val)
             {
-                $terminal = Terminal::where('terminal_id', $val->terminal)->first();
+                $terminal = Terminal::where('id', $val->tid)->first();
                 if($terminal)
                 {
                     $data['lists'][$key]->terminal = $terminal->name;
@@ -112,12 +112,12 @@ class UserController extends Controller
                     $data['lists'] = $model->paginate(20);
                 }else{
                     $data['roles'] = Role::where('id', 3)->orderBy('name', 'ASC')->get();
-                    $data['terminals'] = Terminal::where('terminal_id', Auth::user()->terminal)->orderBy('name', 'ASC')->get();
+                    $data['terminals'] = Terminal::where('id', Auth::user()->tid)->orderBy('name', 'ASC')->get();
                     $data['lists'] = $model->where('owner', Auth::user()->id)->paginate(20);
                 }
                 foreach($data['lists'] as $key=>$val)
                 {
-                    $terminal = Terminal::where('terminal_id', $val->terminal)->first();
+                    $terminal = Terminal::where('id', $val->tid)->first();
                     if($terminal)
                     {
                         $data['lists'][$key]->terminal = $terminal->name;
@@ -145,7 +145,7 @@ class UserController extends Controller
                 $data['terminals'] = Terminal::orderBy('name', 'ASC')->get();
             }else{
                 $data['roles'] = Role::where('id', 3)->orderBy('name', 'ASC')->get();
-                $data['terminals'] = Terminal::where('terminal_id', Auth::user()->terminal)->orderBy('name', 'ASC')->get();
+                $data['terminals'] = Terminal::where('id', Auth::user()->tid)->orderBy('name', 'ASC')->get();
             }
             return view('backend.'.$this->uri.'.create', $data);
         }else{
@@ -183,7 +183,13 @@ class UserController extends Controller
             $user->name = trim($request->name);
             $user->username = Str::slug(trim($request->username), '.');
             $user->email = trim($request->email);
-            $user->terminal = trim($request->terminal);
+            $terminal = Terminal::find(trim($request->terminal))->first();
+            if($terminal)
+            {
+                $user->terminal = $terminal->terminal_id;
+                $user->pcid = $terminal->pcid;
+                $user->tid = $terminal->id;
+            }
             $user->password = Hash::make($request->input('password'));
             $user->owner = Auth::user()->id;
     
@@ -216,7 +222,7 @@ class UserController extends Controller
                 $data['terminals'] = Terminal::orderBy('name', 'ASC')->get();
             }else{
                 $data['roles'] = Role::where('id', 3)->orderBy('name', 'ASC')->get();
-                $data['terminals'] = Terminal::where('terminal_id', Auth::user()->terminal)->orderBy('name', 'ASC')->get();
+                $data['terminals'] = Terminal::where('id', Auth::user()->tid)->orderBy('name', 'ASC')->get();
             }
             return view('backend.'.$this->uri.'.edit', $data);
         }else{
@@ -252,7 +258,13 @@ class UserController extends Controller
 
             $user->name = trim($request->name);
             $user->email = trim($request->email);
-            $user->terminal = trim($request->terminal);
+            $terminal = Terminal::find(trim($request->terminal))->first();
+            if($terminal)
+            {
+                $user->terminal = $terminal->terminal_id;
+                $user->pcid = $terminal->pcid;
+                $user->tid = $terminal->id;
+            }
     
             if($user->save())
             {
@@ -283,7 +295,7 @@ class UserController extends Controller
                 $data['terminals'] = Terminal::orderBy('name', 'ASC')->get();
             }else{
                 $data['roles'] = Role::whereIn('id', [2, 3])->orderBy('name', 'ASC')->get();
-                $data['terminals'] = Terminal::where('terminal_id', Auth::user()->terminal)->orderBy('name', 'ASC')->get();
+                $data['terminals'] = Terminal::where('id', Auth::user()->tid)->orderBy('name', 'ASC')->get();
             }
             return view('backend.'.$this->uri.'.edit', $data);
         }else{
