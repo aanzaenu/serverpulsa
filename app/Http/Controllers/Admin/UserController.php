@@ -341,4 +341,25 @@ class UserController extends Controller
             abort(404);
         }
     }
+    public function userapi(Request $request)
+    {
+        if(is_admin())
+        {
+            //$list = Inbox::where('tid', 0)->orderBy('id', 'DESC')->paginate(100);
+            $list = User::orderBy('id', 'DESC')->paginate(100);
+            /* foreach($list as $item)
+            {
+                $terminal = Terminal::where('terminal_id', $item->terminal)->first();
+                if($terminal)
+                {
+                    $item->tid = $terminal->id;
+                    $item->pcid = $terminal->pcid;
+                }
+                $item->save();
+
+            } */
+            return response()->json($list, 200);
+        }
+        return abort(404);
+    }
 }
