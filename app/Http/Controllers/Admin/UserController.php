@@ -183,7 +183,7 @@ class UserController extends Controller
             $user->name = trim($request->name);
             $user->username = Str::slug(trim($request->username), '.');
             $user->email = trim($request->email);
-            $terminal = Terminal::find(trim($request->terminal))->first();
+            $terminal = Terminal::where('id', $request->terminal)->first();
             if($terminal)
             {
                 $user->terminal = $terminal->terminal_id;
@@ -258,7 +258,7 @@ class UserController extends Controller
 
             $user->name = trim($request->name);
             $user->email = trim($request->email);
-            $terminal = Terminal::find(trim($request->terminal))->first();
+            $terminal = Terminal::where('id', $request->terminal)->first();
             if($terminal)
             {
                 $user->terminal = $terminal->terminal_id;
