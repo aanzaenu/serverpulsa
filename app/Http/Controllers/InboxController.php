@@ -22,6 +22,7 @@ class InboxController extends Controller
         if(!empty($request))
         {
             $pengirim = $request->get('pengirim');
+            $pcid = $request->get('pcid');
             $latest = Inbox::where('identifier', $request->get('identifier'))->orderby('code', 'DESC')->first();
             $lastid = 0;
             if($latest)
@@ -29,6 +30,12 @@ class InboxController extends Controller
                 $lastid = $latest->code;
             }
             $cek = Inbox::where('identifier', $request->get('identifier'))->where('code', $request->get('code'))->first();
+            $terminal = Terminal::where('terminal_id', $request->get('terminal'))->where('pcid', $pcid)->first();
+            $tid = 0;
+            if($terminal)
+            {
+                $tid = $terminal->id;
+            }
             if(!$cek){
                 if(intval($request->get('code')) > $lastid)
                 {
@@ -47,6 +54,8 @@ class InboxController extends Controller
                                 'total' => $request->get('total'),
                                 'op' => 0,
                                 'identifier' => $request->get('identifier'),
+                                'pcid' => $pcid,
+                                'tid' => $tid
                             );
                             Inbox::create($array);
                         //}
@@ -176,14 +185,18 @@ class InboxController extends Controller
         if(!empty($request))
         {
             $terminal = $request->get('terminal');
+            $pcid = $request->get('pcid');
             $modelterminal = Terminal::all();
             foreach($modelterminal as $key=>$val)
             {
                 if($val->terminal_id == $terminal)
                 {
-                    $save_terminal = Terminal::where('terminal_id', $terminal)->first();
-                    $save_terminal->saldo = $request->get('saldo');
-                    $save_terminal->save();
+                    $save_terminal = Terminal::where('terminal_id', $terminal)->where('pcid', $pcid)->first();
+                    if($save_terminal)
+                    {
+                        $save_terminal->saldo = $request->get('saldo');
+                        $save_terminal->save();
+                    }
                 }
             }
             $model = Setting::where('key', 'saldo')->first();

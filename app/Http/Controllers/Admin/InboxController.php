@@ -99,7 +99,7 @@ class InboxController extends Controller
                 if(!empty($request->get('from')) && !empty($request->get('to')))
                 {
                     $from = $request->get('from').' 00:00:01';
-                    $to = $request->get('to').' 23:23:59';
+                    $to = $request->get('to').' 23:59:59';
                     $d_from = strtotime($from);
                     $d_to = strtotime($to);
                     $sfrom = date('Y-m-d H:i:s', $d_from);

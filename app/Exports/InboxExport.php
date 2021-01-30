@@ -32,7 +32,7 @@ class InboxExport implements FromCollection, WithHeadings, WithMapping, WithColu
         if(!empty($this->from) && !empty($this->to))
         {
             $from = $this->from.' 00:00:01';
-            $to = $this->to.' 23:23:59';
+            $to = $this->to.' 23:59:59';
             $d_from = strtotime($from);
             $d_to = strtotime($to);
             $sfrom = date('Y-m-d H:i:s', $d_from);
