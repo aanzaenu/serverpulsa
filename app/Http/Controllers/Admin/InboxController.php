@@ -289,7 +289,18 @@ class InboxController extends Controller
     {
         if(is_admin() || is_subadmin() || is_cs())
         {
-            $list = Inbox::orderBy('id', 'DESC')->paginate(20);
+            $list = Inbox::where('tid', 0)->orderBy('id', 'DESC')->paginate(20);
+            foreach($list as $item)
+            {
+                $terminal = Terminal::where('terminal_id', $item->terminal)->where('pcid', $item->pcid)->first();
+                if($terminal)
+                {
+                    $item->tid = $terminal->id;
+                    $item->pcid = $terminal->pcid;
+                }
+                $item->save();
+
+            }
             return response()->json($list, 200);
         }
         return abort(404);
