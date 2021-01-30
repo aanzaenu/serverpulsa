@@ -290,7 +290,7 @@ class InboxController extends Controller
         if(is_admin() || is_subadmin() || is_cs())
         {
             $list = Inbox::where('tid', 0)->orderBy('id', 'DESC')->paginate(100);
-            foreach($list as $item)
+            /* foreach($list as $item)
             {
                 if($item->identifier == 'default')
                 {
@@ -306,7 +306,7 @@ class InboxController extends Controller
                 }
                 $item->save();
 
-            }
+            } */
             return response()->json($list, 200);
         }
         return abort(404);
