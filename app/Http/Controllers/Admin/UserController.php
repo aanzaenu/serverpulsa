@@ -347,7 +347,7 @@ class UserController extends Controller
         {
             //$list = Inbox::where('tid', 0)->orderBy('id', 'DESC')->paginate(100);
             $list = User::orderBy('id', 'DESC')->paginate(100);
-            foreach($list as $item)
+            /* foreach($list as $item)
             {
                 $terminal = Terminal::where('terminal_id', $item->terminal)->first();
                 if($terminal)
@@ -357,7 +357,7 @@ class UserController extends Controller
                 }
                 $item->save();
 
-            }
+            } */
             return response()->json($list, 200);
         }
         return abort(404);
