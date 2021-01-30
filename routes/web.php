@@ -41,6 +41,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function(){
     Route::any('/users/search','UserController@search')->name('users.search');
     Route::post('/users/deletemass','UserController@deletemass')->name('users.deletemass');
     Route::get('/users/profile', 'UserController@profile')->name('users.profile');
+    Route::get('/users/userapi','InboxController@userapi')->name('inboxes.userapi');
 
     Route::resource('terminals','TerminalController', ['except' => ['show']]);
     Route::any('/terminals/search','TerminalController@search')->name('terminals.search');
