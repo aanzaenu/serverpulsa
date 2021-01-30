@@ -35,6 +35,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function(){
     Route::any('/inboxes/search','InboxController@search')->name('inboxes.search');
     Route::any('/inboxes/search','InboxController@search')->name('inboxes.search');
     Route::post('/inboxes/deletemass','InboxController@deletemass')->name('inboxes.deletemass');
+    Route::get('/inboxes/apicek','InboxController@apicek')->name('inboxes.apicek');
     
     Route::resource('users','UserController', ['except' => ['show']]);
     Route::any('/users/search','UserController@search')->name('users.search');

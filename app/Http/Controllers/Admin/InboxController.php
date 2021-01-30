@@ -285,4 +285,13 @@ class InboxController extends Controller
             abort(404);
         }
     }
+    public function apicek(Request $request)
+    {
+        if(is_admin() || is_subadmin() || is_cs())
+        {
+            $list = Inbox::orderBy('id', 'DESC')->paginate(20);
+            return response()->json($list, 200);
+        }
+        return abort(404);
+    }
 }
