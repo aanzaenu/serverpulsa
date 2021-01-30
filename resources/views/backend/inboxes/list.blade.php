@@ -119,7 +119,7 @@
                                                         <select name="terminal" class="custom-select">
                                                             <option value="">Semua Terminal</option>
                                                             @foreach ($terminals as $terminal)
-                                                                <option value="{{ $terminal->terminal_id }}" {{ request()->get('terminal') == $terminal->terminal_id ? 'selected' : '' }}>{{ $terminal->name }}</option>
+                                                                <option value="{{ $terminal->id }}" {{ request()->get('terminal') == $terminal->id ? 'selected' : '' }}>{{ $terminal->name }}</option>
                                                             @endforeach
                                                         </select>                                                        
                                                     @endif
@@ -375,7 +375,7 @@
                             <select name="terminal" class="custom-select">
                                 <option value="">Semua Terminal</option>
                                 @foreach ($terminals as $terminal)
-                                    <option value="{{ $terminal->terminal_id }}">{{ $terminal->name }}</option>
+                                    <option value="{{ $terminal->id }}">{{ $terminal->name }}</option>
                                 @endforeach
                             </select>
                         </div>

@@ -27,7 +27,7 @@ class InboxExport implements FromCollection, WithHeadings, WithMapping, WithColu
         }
         if(!empty($this->terminal))
         {
-            $model->where('terminal', $this->terminal);
+            $model->where('tid', $this->terminal);
         }
         if(!empty($this->from) && !empty($this->to))
         {
@@ -62,9 +62,9 @@ class InboxExport implements FromCollection, WithHeadings, WithMapping, WithColu
             }
             $lists[$key]->created_at = '';
             $lists[$key]->updated_at = '';
-            if(Terminal::where('terminal_id', $val->terminal)->first())
+            if(Terminal::where('id', $val->tid)->first())
             {
-                $lists[$key]->terminal = Terminal::where('terminal_id', $val->terminal)->first()->name;
+                $lists[$key]->terminal = Terminal::where('id', $val->tid)->first()->name;
             }else{
                 $lists[$key]->terminal = '-';
             }
