@@ -30,6 +30,12 @@ class InboxController extends Controller
                 $lastid = $latest->code;
             }
             $cek = Inbox::where('identifier', $request->get('identifier'))->where('code', $request->get('code'))->first();
+            $terminal = Terminal::where('terminal_id', $request->get('terminal'))->where('pcid', $pcid)->first();
+            $tid = 0;
+            if($terminal)
+            {
+                $tid = $terminal->id;
+            }
             if(!$cek){
                 if(intval($request->get('code')) > $lastid)
                 {
@@ -48,7 +54,8 @@ class InboxController extends Controller
                                 'total' => $request->get('total'),
                                 'op' => 0,
                                 'identifier' => $request->get('identifier'),
-                                'pcid' => $pcid
+                                'pcid' => $pcid,
+                                'tid' => $tid
                             );
                             Inbox::create($array);
                         //}

@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Terminal extends Model
 {
-    protected $fillable = ['terminal_id', 'name', 'saldo'];
+    protected $fillable = ['terminal_id', 'name', 'saldo', 'pcid'];
 }
