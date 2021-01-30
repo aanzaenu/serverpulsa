@@ -72,7 +72,7 @@
                                     <select id="terminal" name="terminal" class="form-control @if($errors->has('terminal')) is-invalid @endif"  data-toggle="select2">
                                         <option value="">Semua Terminal</option>
                                         @foreach ($terminals as $item)
-                                            <option value="{{ $item->id }}" {{ $item->id == $row->terminal ? 'selected' : ''}}>{{ $item->name }}</option>
+                                            <option value="{{ $item->id }}" {{ $item->id == $row->tid ? 'selected' : ''}}>{{ $item->name }}</option>
                                         @endforeach
                                     </select>
                                     <small id="terminalHelp" class="form-text text-muted">Tidak Berpengaruh untuk Group Admin</small>
