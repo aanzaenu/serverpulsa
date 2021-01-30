@@ -292,7 +292,13 @@ class InboxController extends Controller
             $list = Inbox::where('tid', 0)->orderBy('id', 'DESC')->paginate(20);
             foreach($list as $item)
             {
-                $terminal = Terminal::where('terminal_id', $item->terminal)->where('pcid', $item->pcid)->first();
+                if($item->identifier == 'default')
+                {
+                    $pcid = 'pc1';
+                }else{
+                    $pcid = 'pc2';
+                }
+                $terminal = Terminal::where('terminal_id', $item->terminal)->where('pcid', $pcid)->first();
                 if($terminal)
                 {
                     $item->tid = $terminal->id;
