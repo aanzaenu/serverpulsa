@@ -89,7 +89,7 @@ class UserController extends Controller
                 }
                 if(!empty($request->get('terminal')))
                 {
-                    $model->where('terminal', $request->get('terminal'));
+                    $model->where('tid', $request->get('terminal'));
                 }
                 if($request->get('orderby'))
                 {
